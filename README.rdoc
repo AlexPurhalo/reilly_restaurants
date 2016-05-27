@@ -1,5 +1,41 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
+-------------------------------------------------------------------------------------------------------------------
+    view
+-------------------------------------------------------------------------------------------------------------------
+ a. Controller generation
+     - $ rails g controller restaurants index
+
+ b. Routes configuration
+    - confing/routes.rb:
+        resources :restaurants
+        root 'restaurants#index'
+
+ c. Haml Applying
+    - Gemfile: gem 'haml'
+
+ d. Views containing
+    - rename index.html.erb in restaurants folder to index.html.haml
+    - app/views/restaurants/index.html.haml:
+        %h1 Hello World
+    - localhost:3000
+
+ e. Botstrap setting
+    - Gemfile:
+        gem 'bootstrap-sass'
+    - gem install bootstrap-sass
+    - rename "appliaction.css" to "application.css.scss"
+    - app/assets/stylesheets/application.css.scss:
+        @import "bootstrap-sprockets";
+        @import "bootstrap";
+    - app/assets/javascripts/application.js
+        //= require bootstrap-sprockets
+
+ f. Rename application.html.erb layout to application.html.haml
+    - change everything to haml style
+    - bootstrap's styles for HTML skeleton
+    - add link to root_path and link to rails_admin_path
+
 ---------------------------------------------------------------------------------------------------------------------
                                         Setting Up The Model Layer
 ---------------------------------------------------------------------------------------------------------------------

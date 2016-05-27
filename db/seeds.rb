@@ -5,3 +5,16 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+  restaurant = Restaurant.create(
+      name: "Bungalo",
+      address: "Grow Street, 5",
+      description: "You must try this!"
+  )
+
+  comments = Comment.create(
+      author: "Alex",
+      body: "I love this shit",
+      rank: 9,
+      restaurant_id: 1
+  )
+  ancestry_comment = Comment.create(author: "Bob", body: "Alex, I love this sit too", parent: Comment.find(1), restaurant_id: 1)

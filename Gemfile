@@ -55,3 +55,12 @@ gem 'rails_admin'
 # Additional features are named_scopes, integrity checking, integrity restoration, arrangement of
 # (sub)tree into hashes and different strategies for dealing with orphaned records.
 gem 'ancestry'
+
+# bootstrap-sass is a Sass-powered version of Bootstrap 3, ready to drop right into your Sass powered applications.
+gem 'bootstrap-sass'
+
+# Haml (HTML Abstraction Markup Language) is a layer on top of HTML or XML that's designed to express the structure
+# of documents in a non-repetitive, elegant, and easy way by using indentation rather than closing tags
+# and allowing Ruby to be embedded with ease.
+# It was originally envisioned as a plugin for Ruby on Rails, but it can function as a stand-alone templating engine.
+gem 'haml'
