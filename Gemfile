@@ -45,3 +45,5 @@ group :development do
   gem 'spring'
 end
 
+# RailsAdmin is a Rails engine that provides an easy-to-use interface for managing your data.
+gem 'rails_admin'

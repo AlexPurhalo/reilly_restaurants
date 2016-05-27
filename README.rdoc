@@ -1,28 +1,28 @@
-== README
+-------------------------------------------------------------------------------------------------------------------
+                                               INSTRUCTION
+-------------------------------------------------------------------------------------------------------------------
+                                Scaffolding the Application with Admin Panel
+-------------------------------------------------------------------------------------------------------------------
+ a. Application creating
+    - $ rails new reilly_restaurants
+    - $ cd reilly_restaurants
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+ b. Admin gem uploading
+    - gem 'rails_admin'
+    - $ bundle install
+    - $ rails g rails_admin:install
 
-Things you may want to cover:
+ c. Model creating
+    - $ rails g model Restaurant name:string address:string description:text
+    - $ rake db:migrate
 
-* Ruby version
+ d. Adding records to data base
+    - $ rails console
+    - > Restaurant.connection
+    - > Restaurant.create(name: "Bungalo", address: "Grow Street, 5", description: "You must try this!")
 
-* System dependencies
+ e. Admin panel overview
+    - $ rails server
+    - in browser: localhost:3000/admin/restaurant
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+-------------------------------------------------------------------------------------------------------------------
