@@ -47,3 +47,11 @@ end
 
 # RailsAdmin is a Rails engine that provides an easy-to-use interface for managing your data.
 gem 'rails_admin'
+
+# Ancestry allows the records of a ActiveRecord model to be organized in a tree structure,
+# using a single, intuitively formatted database column.
+# It exposes all the standard tree structure relations (ancestors, parent, root, children, siblings, descendants)
+# and all of them can be fetched in a single sql query.
+# Additional features are named_scopes, integrity checking, integrity restoration, arrangement of
+# (sub)tree into hashes and different strategies for dealing with orphaned records.
+gem 'ancestry'

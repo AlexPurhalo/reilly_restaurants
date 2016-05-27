@@ -1,5 +1,52 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
+---------------------------------------------------------------------------------------------------------------------
+                                        Setting Up The Model Layer
+---------------------------------------------------------------------------------------------------------------------
+ a. Ancestry gem adding
+    - gem 'ancestry'
+    - $ gem install ancestry
+
+ b. New model creating
+    - $ rails g model Comment author:string body:text rank:integer restaurant:belongs_to
+    - $ rake db:migrate
+    - models/comment.rb:
+      'belongs_to :restaurant' (should be default)
+    - models/restaurant.rb:
+      'has_many :comments'
+
+ c. Validation
+    - models/comment.rb: 'validates :restaurant, presence: true'
+    - $ rails server
+    - check in browser 'localhost:3000/admin/comment/new' - 'required' text under 'Restaurant' select field
+
+ d. Record creating
+    - $ rails console
+    - $ Comment.connection
+    - $ Comment.create(author: "Alex", body: "I love this shit", rank: 9, restaurant_id: 1)
+
+ e. Admin panel overview
+    - $ rails s
+    - in browser: localhost:3000/admin/comment
+
+ f. Ancestry column for relationships
+    - $ rails g migration add_ancestry_to_comment
+    - migrate/20160527082254_add_ancestry_to_comment:
+        'add_column :comments, :ancestry, :string',
+        'add_index :comments, :string'
+    - $ rake db:migrate
+    - models/comment.rb:
+        'has_ancestry'
+    - $ rails s
+    - 'localhost:3000/amdin/comment/new' check ancestry option
+
+ g. Ancestry comment  adding
+    - $ rails c
+    - > Comment.create(author: "Bob", body: "Alex, I love this sit too", parent: Comment.find(1), restaurant_id: 1)
+    - in browser 'localhost:3000/admin/comment/:id/edit' look at Ancestry option, it should has a number
+    - > Comment.find(1).children
+    - > Comment.find(2).path
+
 -------------------------------------------------------------------------------------------------------------------
                                 Scaffolding the Application with Admin Panel
 -------------------------------------------------------------------------------------------------------------------
