@@ -1,7 +1,53 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
-    view
+                                           Pages Structure
+-------------------------------------------------------------------------------------------------------------------
+ a. All restaurants on home page
+    - app/controllers/restaurants_controller.rb:
+        @restaurants instance to index action with all restaurants
+    - app/views/restaurants/index.html.haml
+        @restaurants iterating for info. showing
+        linking to show page of every restaurant
+ b. One restaurant page
+     - app/controllers/restaurants_controller.rb:
+        add a "show" action with @restaurant instance one restaurant info showing
+     - app/views/restaurants/show.html.haml
+        create show.html.haml file
+        show there info about restaurant
+        add the back link and links for info manipulation
+
+ d. New restaurant page
+     - app/controllers/restaurants_controller.rb:
+       add "new" and "create" actions to make data creating available throw user interface
+     - app/views/restaurants/new.html.haml
+        create new.html.haml file with partial rendering
+
+ e. Form partial
+     - Gemfile: gem 'simple-form'
+     - gem install simple-form
+     - rails generate simple_form:install --bootstrap
+     - app/views/restaurants/_form.html.haml
+        create _form.html.haml partial with acording form to manipulate by parametres
+     - models/restaurant.rb
+        add validation
+
+ f. Restaurant edit page
+    - app/controllers/restaurants_controller
+       add 'edit' action to restaurants controller with acording functional
+    - app/views/restaurants/edit.html.erb
+       render form partial
+
+ g. Destroy action
+    - app/controllers/restaurants_controller
+        add 'destroy' action to restaurants controller with acording functional
+    - app/views/restaurants/show.html.erb
+        come to page of certain restaurant and check work ability of delete function
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+                                            Home Page Defining
 -------------------------------------------------------------------------------------------------------------------
  a. Controller generation
      - $ rails g controller restaurants index

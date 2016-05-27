@@ -1,1 +1,6 @@
-%h1 Hello World
+- @restaurants.each do |restaurant|
+  .row.restaurants
+    .col-md-12.restaurant
+      %h2= link_to restaurant.name, restaurant
+      %hr
+      %p= restaurant.description

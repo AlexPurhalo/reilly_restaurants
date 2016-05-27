@@ -1,0 +1,12 @@
+.row.restaurant
+  .col-md-3
+    %h1= @restaurant.name
+    %p
+      Address:
+      = @restaurant.address
+    =link_to "back", root_path, class: "btn btn-primary"
+    =link_to "Edit", edit_restaurant_path, class: "btn btn-primary"
+    =link_to "Delete", restaurant_path, method: :delete, data: { confirm: "Sure?" }, class: "btn btn-primary"
+  .col-md-9
+    %p.restaurant-description= @restaurant.description
+

@@ -64,3 +64,6 @@ gem 'bootstrap-sass'
 # and allowing Ruby to be embedded with ease.
 # It was originally envisioned as a plugin for Ruby on Rails, but it can function as a stand-alone templating engine.
 gem 'haml'
+
+# Forms made easy!
+gem 'simple_form'

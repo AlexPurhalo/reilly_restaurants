@@ -9,14 +9,17 @@
 %body
   .header
     %nav.navbar.navbar-default
-      .container-fluid
-        .navbar-header
-          = link_to "Home", root_path, class: "navbar-brand"
-
-        .collapse.navbar-collapse
-          %ul.nav.navbar-nav.navbar-right
-            %li
-              = link_to "Manage Restaurants", rails_admin_path
+      .container
+        .container-fluid
+          .navbar-header
+            = link_to "Home", root_path, class: "navbar-brand"
+          .collapse.navbar-collapse
+            %ul.nav.navbar-nav
+              %li
+                = link_to "New", new_restaurant_path
+            %ul.nav.navbar-nav.navbar-right
+              %li
+                = link_to "Manage Restaurants", rails_admin_path
 
   .container
     = yield
