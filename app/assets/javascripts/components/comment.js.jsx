@@ -4,7 +4,7 @@ var Comment = React.createClass({
     propTypes: {
         author: React.PropTypes.string,
         body: React.PropTypes.string,
-        rank: React.PropTypes.integer
+        rank: React.PropTypes.number
     },
 // 3. Render JSX with properties from view file
     render: function() {

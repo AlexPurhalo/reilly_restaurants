@@ -1,6 +1,44 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                                             Comments throw Json
+-------------------------------------------------------------------------------------------------------------------
+ a. Template adding
+    - app/views/restaurants/show.html.haml:
+        1. delete iteration
+        2. insted of "Comment" component add new "CommentList"
+        3. add raw with rendering of 'comments/index.json.jbuilder' template insteat of properties declaring
+    - app/views/comments/index.json.jbuilder
+        1. create comments folder with index.json.jbuilder file
+        2. add json array of comments
+        3. add 'comments/comment' partial as comment
+    - app/views/comments/_comment.json.jbuilder
+        1. create this comment.json.jbuilder partial in comments folder
+        2. add comment with id, author, body and rank parameters
+        3. convert comment with parameters to json format
+    - localhost:3000/restaurants/:id
+        1. come to page of one restaurant
+        2. come Ctrl + U
+        3. check that source of page has react properties
+           Example: <div data-react-class="CommentList" data-react-props="{&quot;comments&quot;:&quot; ... </div>
+
+b. Comment recreating
+    - app/assets/javascripts/components/comment_list.js.jsx
+        1. create comment_list.js.jsx file in components folder
+        2. Define CommentList class inherited from React class
+        3. Render JSX
+        4. In JSX iterate throw "comments" array with map method
+        5. Contain function with "comment" parameter as argument of map method
+        6. Return "Comment" component
+        7. Contain "author", "body" and "rank" properties to "Comment" component
+        8. Make recently declared properties equal to key of "comment" object, example: "body={comment.body}"
+        9. Add "key" property to "Comment" component and make it equal to "comment" object's "id" key
+        10. Make code clearly. Use shortcut expressions declaring. Example: "{ ... comment }"
+        11. Check work in localhost:3000/restaurants/:id in Comment's section
+
+
+
+-------------------------------------------------------------------------------------------------------------------
                                        Showing throw comments iteration
 -------------------------------------------------------------------------------------------------------------------
    Showign throw iterating

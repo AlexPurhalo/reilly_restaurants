@@ -28,6 +28,5 @@
     %hr
 
     %ul.comments
-      - @comments.each do |comment|
-      %li  = react_component('Comment', {author: comment.author, body: comment.body, rank: comment.rank})
+      %li= react_component('CommentList', {comments: raw(render(template: 'comments/index.json.jbuilder'))})
 
