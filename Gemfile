@@ -67,3 +67,6 @@ gem 'haml'
 
 # Forms made easy!
 gem 'simple_form'
+
+# Compile your JSX on demand or precompile for production.
+gem 'react-rails'

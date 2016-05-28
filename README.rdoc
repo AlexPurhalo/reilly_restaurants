@@ -1,6 +1,33 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                                           First Component
+-------------------------------------------------------------------------------------------------------------------
+ a. React gem
+    - Gemfile: gem 'react-rails'
+    - $ gem install react-rails
+    - $ rails g react:install
+    - app/assets/javascripts/application.js:
+        //= require react
+        //= require react_ujs
+        //= require components
+    - localhost:3000
+    - Ctrl + U, ensure that you have scripts like this: src='assets/react...'
+
+ c. Component creating
+    - app/views/restaurants/show.html.haml:
+        1. add comment section
+        2. add react_component with 'Comment' name
+        3. add properties to this component (author, body, rank)
+        4. add comment form for structure organization
+    - app/assets/javascripts/components/comment.js.jsx:
+        1. create comment.js.jsx
+        2. create there Comment class inherited from React class
+        3. render jsx with exporession describes comment's properties
+    - localhost:3000/restaurants/:id to check that properties comes to page
+
+
+-------------------------------------------------------------------------------------------------------------------
                                            Pages Structure
 -------------------------------------------------------------------------------------------------------------------
  a. All restaurants on home page

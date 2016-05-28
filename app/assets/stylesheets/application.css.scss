@@ -16,3 +16,27 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+.comment {
+  ul {
+    list-style: none;
+    display: inline-block;
+    padding: 0 7rem 0.5rem 0;
+    border-bottom: solid 1px #286090;
+    li {
+      list-style: none;
+      display: inline-block;
+
+      h5 {
+        font-weight: 600;
+      }
+
+      span {
+        margin-left: 2rem;
+      }
+    }
+  }
+}
+
+ul {
+  list-style: none;
+}
