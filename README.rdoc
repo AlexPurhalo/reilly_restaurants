@@ -1,6 +1,15 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                                       Showing throw comments iteration
+-------------------------------------------------------------------------------------------------------------------
+   Showign throw iterating
+    - app/controllers/restaurant_controller:
+        define new @comments instance in show action with all restaurant's comments data
+    - app/views/restaurants/show.html.erb:
+        iterate throw @comments instance to show all properties of current comment in "Comment" component
+
+-------------------------------------------------------------------------------------------------------------------
                                            First Component
 -------------------------------------------------------------------------------------------------------------------
  a. React gem

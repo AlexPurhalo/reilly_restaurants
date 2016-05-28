@@ -28,13 +28,6 @@
     %hr
 
     %ul.comments
-      %li
-      .one-comment
-        %p= react_component('Comment', {author: "Alexander", body: "Marfa PBR&B normcore, pickled cornhole mixtape etsy. Banjo ramps slow-carb 3 wolf moon, blue bottle tacos offal kinfolk waistcoat craft beer cold-pressed fingerstache master cleanse tofu. Meditation try-hard sustainable, sriracha yr tilde photo booth.", rank: 11})
-      %li
-      .one-comment
-        %p= react_component('Comment', {author: "Barabashka", body: "Chillwave jean shorts health goth, distillery you probably haven't heard of them artisan banjo selfies farm-to-table. Next level blue bottle ennui waistcoat biodiesel, umami thundercats readymade PBR&B celiac chillwave chia. Sartorial direct tra", rank: 5})
-      %ul
-        %li
-          .one-comment
-          %p= react_component('Comment', {author: "Lahudra", body: "Yeah man, I love thisYeah man, I love thisYeah man, I love thisYeah man, I love thisYeah man, I love thisYeah man, I love thisYeah man, I love thisYeah man, I love thisYeah man, I love thisYeah man, I love thisYeah man, I love this", rank: 0})
+      - @comments.each do |comment|
+      %li  = react_component('Comment', {author: comment.author, body: comment.body, rank: comment.rank})
+
