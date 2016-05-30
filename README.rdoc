@@ -1,6 +1,24 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                                            EcmaScript 6 Implementation 
+-------------------------------------------------------------------------------------------------------------------
+ a. Gem for reading ES6
+   - Gemfile: gem 'sprockets-es6'
+   - $ gem install sprockets-es6
+   - $ rails s
+
+ b. Work ability
+   - app/assets/javascripts/hello.es6
+       1. create file
+       2. ad variable with some string, instead of "var" use "let"
+       3. localhost:3000, Ctrl+ U, find "hello..." script and opent its
+       4. ensure that file transorm es6 to js, instead of "let" you should see "var" there
+       5. back to file and add function that takes as parameter declared variable
+          alert this parameter and call the function
+       6. back to browser and refresh page, you should see alert with your message
+
+-------------------------------------------------------------------------------------------------------------------
                                   Flusx Implementation (Actions, Sotre)
 -------------------------------------------------------------------------------------------------------------------
  a. Flux installing

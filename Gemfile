@@ -76,3 +76,6 @@ gem 'flux-rails-assets'
 
 # lodash for the Rails asset pipeline
 gem 'lodash-rails'
+
+# A Sprockets transformer that converts ES6 code into vanilla ES5 with Babel JS.
+gem 'sprockets-es6'
