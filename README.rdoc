@@ -1,7 +1,49 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
-                                            EcmaScript 6 Implementation 
+                                           Converting to ES6 syntax
+-------------------------------------------------------------------------------------------------------------------
+ a. Stuff cleaning
+   - app/assets/javascripts/hello.es6
+       delete this file
+
+ b. Restructuring to ES6
+   - app/assets/javscripts/app.es6
+       1. rename this file from "js" format to "es6"
+       2. check that functional still works, for this:
+          console: Actions.addComment({id: 1, body: "works"}), rendering compoennt's stuff to page
+       3. instead 'var' use const to store "Constants" object
+       4. instead of store to new extend with 'var' keyword use
+          'class' + "Store" as class's name that "extends" from "EventEmitter"
+           and contain all too class's body "{ ... }"
+       5.  define 'constructor' function
+           contain in body of this function empty "_comments" comment array adding "this" keyword
+           add "super" function to add "constructor" function inheritance
+       4. clean up all commas after every function in class's body
+       5. change structure of every function in body of class following example above:
+          func_name (par) { ... }
+          check that page rendering without mistakes
+          look to console, you should have "Store.comments is not a function" error
+       6. add "commentStore" variable that equal to new "Store" object
+       8. in body of dispatcher's switch rename "Store" to "commentStore"
+   - app/assets/javascripts/cpmponents/comment_list.js.jsx
+       1.  in JSX rendering rewrite "Store" to "commentStore"
+       2. do the same for "Store" in functions bodies under "render" function
+          check result in browser, adding of objects to Store throw console still should works
+   - app/assets/javscripts/app.es6
+       1. change "var" of ApiDispatcher to "let"
+       2. change structure of function that is first argument of dispatcher's register to es6 format
+          for this delete "function" keyword and add "=>" after parameter
+          instead taking "action" variable as parameter of switch type just: "payload.actionType"
+       3. change "Actions" variable with ew extend to "class" with "Actions" name
+          then contain in body "{ ... }" all stuff from second argument of extend method that was before
+          deal with syntax of "addComment" function
+       4. Add new variable that equal to new "Actions" object that "addComment" function will be used
+          console: commentActions.addComment({ id: 1, author: "Bob", body: "I love this shit", rank: 7})
+          rendering: object with structure of "CommentList" component
+
+-------------------------------------------------------------------------------------------------------------------
+                                            EcmaScript 6 Implementation
 -------------------------------------------------------------------------------------------------------------------
  a. Gem for reading ES6
    - Gemfile: gem 'sprockets-es6'
