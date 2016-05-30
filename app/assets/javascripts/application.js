@@ -14,7 +14,11 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require lodash
 //= require react
 //= require react_ujs
+//= require flux
+//= require eventemitter
 //= require components
+//= require app
 //= require_tree .

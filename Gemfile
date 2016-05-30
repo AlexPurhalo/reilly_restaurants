@@ -70,3 +70,9 @@ gem 'simple_form'
 
 # Compile your JSX on demand or precompile for production.
 gem 'react-rails'
+
+# Use Facebook's Flux dispatcher and Node EventEmitter in your Rails project.
+gem 'flux-rails-assets'
+
+# lodash for the Rails asset pipeline
+gem 'lodash-rails'
