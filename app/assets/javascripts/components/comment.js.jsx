@@ -1,13 +1,11 @@
-// 1. Create first component named "Comment"
-var Comment = React.createClass({
-// 2. Declare properties that we expect
+class Comment extends React.Component {
     propTypes: {
         author: React.PropTypes.string,
         body: React.PropTypes.string,
         rank: React.PropTypes.number
-    },
-// 3. Render JSX with properties from view file
-    render: function() {
+    };
+
+    render() {
         return (
           <div className="comment">
               <ul>
@@ -23,4 +21,5 @@ var Comment = React.createClass({
         );
     }
 
-});
+}
+

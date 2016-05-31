@@ -2,7 +2,7 @@ import AppDispatcher from "/app_dispatcher";
 import Constants from "/constants";
 
 class Actions {
-    addComment(params) {
+    static addComment(params) {
         AppDispatcher.dispatch({
             actionType: Constants.ADD_COMMENT,
             comment: params

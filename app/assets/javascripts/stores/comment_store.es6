@@ -10,8 +10,8 @@ class CommentStore extends EventEmitter {
         AppDispatcher.register((payload) => {
             switch(payload.actionType) {
                 case Constants.ADD_COMMENT:
-                    commentStore.addComment(payload.comment);
-                    commentStore.emitChange();
+                    this.addComment(payload.comment);
+                    this.emitChange();
                     break;
                 default:
                 // NO-OP
@@ -22,6 +22,7 @@ class CommentStore extends EventEmitter {
 
     addComment (comment) {
         this._comments[comment.id] = comment;
+        console.log(this._comments)
     }
 
     comments () {

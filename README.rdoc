@@ -3,9 +3,10 @@
 -------------------------------------------------------------------------------------------------------------------
                                                 Context
 -------------------------------------------------------------------------------------------------------------------
- a. - app/views/restaurants/show.html.haml
-       in react_component use "CommentSection" instead "CommentList" from console
-         * u should have: "CommentSection is not defined" error
+ a. Creating of CommentSection class
+    - app/views/restaurants/show.html.haml
+       0. in react_component use "CommentSection" instead "CommentList" from console
+       *. u should have: "CommentSection is not defined" error
     - app/assets/javascripts/components/comment_section.es6
        1. create comment_section.es6 file im components folder
        2. add 'CommentSection' class that extends from React.Component
@@ -17,13 +18,45 @@
        0.  delete this file
     - app/assets/javascripts/components/comment_section.es6
        1. add 'window' with 'CommentSection' object that equal to new 'CommentSection'
-          * u have warring about no 'render' function from console
+       *. u have warring about no 'render' function from console
        2. add 'render' function to 'CommentSection' class
        3. return some text in div from 'render' function
-       
+
+  b. Ability to use the actions
+    - app/assets/javascripts/components/comment_section.es6
+       1. add 'window' with 'Actions' that equal to 'Actions'
+       2. import 'Actions' from actions
+    - app/assets/javascripts/actions.es6
+       0. in 'Actions' class make 'addComment' as static
+       *. Actions.addComment() should works from console, as output "undefined"
+    - app/assets/javascripts/components/comment_section.es6
+       1. define a 'constructor' with 'super' function
+       2. add 'this' 'store' that equal to 'new' 'CommentStore' class
+       3. add import of 'CommentStore' from comment_store file in stores folder
+       *. try to use 'addComment' function throw console and you'll get error
+          that says: "commentStore is not defined"
+       4. go to store file and change 'addComment' in dispatcher to 'this'
+       *. try to use 'addComment' fuc. again and this should works
+       *. go to store's 'addComment' func. and add consloe log for 'this' '_comments' array
+          then try to use func. throw console and you will see array with added info
+       5. instead of returning previois stuff in 'render' func.
+          return CommentList component with 'store' property that equal to expression of 'this' 'store' from constructor
+          in CommentList change 'commentStore' to 'this' 'store'
+    - app/assets/javascripts/components/comment_list.es6
+       1. change format from 'js.jsx' to 'es6'
+       2. change syntax structure of class to es6 format
+       3. change 'commentStore' to 'this' 'props' 'store' taking property from 'CommentSection' class
+       4. add export of 'CommentList' component
+       *. try to use 'addComment' function and u will get error like: "this.forceUpdate is not a function(…)"
+       5. change argument of 'addChangeListeners' and 'removeChangeListeners' in 'componentDidMount' and
+          'componentWillUnmount' passing 'bind' as method to '_onChange' function in both cases
+          'bind' method should takes 'this' argument
+       *. try replay using of 'addComment' function now it should works
+
 -------------------------------------------------------------------------------------------------------------------
 
                                                  Modules
+
 -------------------------------------------------------------------------------------------------------------------
  a. Adding files to vendor
        1. https://github.com/systemjs/systemjs/tree/master/dist system.js.map system.js
