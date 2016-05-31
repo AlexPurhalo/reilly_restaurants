@@ -58,7 +58,23 @@
        1. change format from 'js.jsx' to 'es6'
        2. change syntax of 'Comment' component to es6
        3. add export of 'Comment' component
+       4. add import of 'Comment' to 'CommentList' component
 
+  d. Context using
+     - app/assets/javascripts/components/comment_component.es6
+       1. add 'static..' 'get' of 'childContextTypes' function in 'CommentSection' component
+          return there 'store' that equale to 'React.PropTypes.object.isRequired'
+       2. add new 'getChildContext' function in 'CommentSection' component
+          return 'store' that equale to 'this' 'store'
+       * refresh page to ensure that u don't have errors in console
+       3. delete 'store' property from rendering of 'CommentList' component
+       * refresh page now and u'll get error that says "Cannot read property 'removeChangeListener' of undefined"
+     - app/assets/javascripts/components/comment_component.es6
+       1. change 'props' of 'store' in 'componentDidMout', 'componentWillUnmount' functions
+          and in returning of 'render' function to 'context'
+       2. add 'static' 'get' of 'contextTypes' function that
+          return 'store' that equale to 'React.Prop.Types.object.usRequired'
+       * use console to add comment to page, rendering should works as before 'context' adding
 
 -------------------------------------------------------------------------------------------------------------------
 
