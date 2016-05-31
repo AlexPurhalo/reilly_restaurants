@@ -10,6 +10,8 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require es6/es6-module-loader
+//= require es6/system.js
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
@@ -22,3 +24,5 @@
 //= require components
 //= require app
 //= require_tree .
+
+System.import('/app');

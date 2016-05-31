@@ -1,6 +1,71 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                                                 Modules
+-------------------------------------------------------------------------------------------------------------------
+ a. Adding files to vendor
+       1. https://github.com/systemjs/systemjs/tree/master/dist system.js.map system.js
+       2. https://github.com/ModuleLoader/es6-module-loader/ es6-module-loader.js.map es6-module-loader.js
+       3. create app/vendor/javascripts/es6 and locate this there these files (4 files)
+       4. in app/assets/javascripts/application.js file
+          include as required es6/es6-module-loader and es6/system
+          requirements should have order, first: es6/es6-module-loader, second es6/system and only then other stuff
+          check scripts comming in browser
+
+ b. Restructuring by modules Part I
+   - app/assets/javascripts/constants.es6
+       1. create this file
+       2. locate there "Constants" object from app.js deleting this from app.js (Ctrl + X, Ctrl + V)
+          console: commentActions.addComment({ id: 1, body: "works"}), rendering: component with properties
+       3. add export as default to "Constants"
+          console:
+            - you should get following error: "Uncaught ReferenceError: exports is not defined"
+            - and another error: "Uncaught TypeError: Cannot read property 'CHANGE_EVENT' of undefined"
+   - config/application.rb
+          add configuration for register transformer:
+     # Rails.application.config.assets.configure do |env|
+     #      env.register_transformer 'text/ecmascript-6', 'application/javascript',
+     #                               Sprockets::ES6.new('modules' => 'system', 'moduleIds' => true)
+     #    end
+   - change version of sprockets-6 gem to "gem 'sprockets-es6', '0.6.1'"
+   - $ bundle update
+   - $ rails s
+   - localhost:3000/restaurants/:id open console, output should says about "commentStore is not defined" error
+
+ c. Restructuring by modules Part II
+   - app/assets/javascripts/components/comment_list
+       change "commentStore" word to "Store" everywhere that is is
+   - app/assets/javascripts/stores/comment_store.es6
+       1. create "stores" folder wit "comment_store.es6" file
+       2. copy and paste "Store" class from app.js file
+       3. rename "Store" to "CommentStore" and add export of this class
+   - app/assets/javascripts/app_dispatcher.es6
+       1. "app_dispathcer.es6" file
+       2. cut and paste "AppDispatcher" variable and export its
+   - app/assets/javascripts/actions.es6
+       1. create "actions.es6" file
+       2. locate there "Actions" class from app.js file
+       4. add export for this class
+   - app/assets/javascripts/stores/comment_store.es6
+       1. locate to "CommentStore" class's "constructor" "AppDispatcher" with "register" method
+       2. in switch of dispatcher rename "commentStore" to "this"
+   - app/assets/javascripts/application.js
+       add "System" "import" for "app" file
+   - app/assets/javascripts/app.js
+       a. for checking
+            1. replace all content in file if you still have
+               to alert with some text
+               go to browser, you should get your alert
+            2. clear up alert and ensure that file is empty
+       b. returining to previous functional
+            1. add "window" with "commentStore" object and make it equal to "CommentStore" object
+            2. add importing of "CommentStore" from its location, /stores/comment_store
+               console: commentStore, output: Object with stuff
+            3. add "window" for "commentActions" object and make it equal to "Actions" object
+            4. add importing of "Actions" from its location, /actions
+               console: commentActions.addComments({id: 1}), rendering of component with properties
+
+-------------------------------------------------------------------------------------------------------------------
                                            Converting to ES6 syntax
 -------------------------------------------------------------------------------------------------------------------
  a. Stuff cleaning
@@ -31,7 +96,7 @@
        2. do the same for "Store" in functions bodies under "render" function
           check result in browser, adding of objects to Store throw console still should works
    - app/assets/javscripts/app.es6
-       1. change "var" of ApiDispatcher to "let"
+       1. change "var" of AppDispatcher to "let"
        2. change structure of function that is first argument of dispatcher's register to es6 format
           for this delete "function" keyword and add "=>" after parameter
           instead taking "action" variable as parameter of switch type just: "payload.actionType"
@@ -158,12 +223,12 @@
         1. add Actions variable that equal to new "extend" method that takes two arguments
         2. first argument is an empty object
         3. second is "addComment" function that takes "params" as parameter
-        4. function contains "ApiDispatcher" that has "dispatch" method
+        4. function contains "AppDispatcher" that has "dispatch" method
         5. method takes as argument object with "actionType" and "comment" keys
         6. first "actionTypes" key is equal to "Constants" object's "ADD_COMMENT" key that is "'comments.add'"
         7. second "comment" key is equal to gotten "params" parameter
             - console: Actions, output: object with "addComment" function
-            - add console.log(payload) before "ApiDispatcher"'s switch
+            - add console.log(payload) before "AppDispatcher"'s switch
             - console: Actions.addComment({id: 1, body: "it works"}),
                        output: Object with "actionType" that equal to "comments.add" action
                        and "comment" that equal to other Object that store recently added data: id: 1, body: "it works"
@@ -172,7 +237,7 @@
             - console: Actions.addComment({id: 1, body: "works"})
             - console: Actions.addComment({id: 2, body: "also works"})
             - console: Store.comments(), output: recently added objects throw "Actions"'s "addComment" function
-        8. in "ApiDispatcher" that takes register method add to case "Store" with "emitChange" method
+        8. in "AppDispatcher" that takes register method add to case "Store" with "emitChange" method
             - add console.log("rendering") into CommentList to rendering
             - refresh page and type in to console: Actions.addComment({id: 1, body: 'hi"})
             - output should be a "rendering" text after every time when we add objects to store
