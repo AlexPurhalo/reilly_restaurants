@@ -1,6 +1,28 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                                                Context
+-------------------------------------------------------------------------------------------------------------------
+ a. - app/views/restaurants/show.html.haml
+       in react_component use "CommentSection" instead "CommentList" from console
+         * u should have: "CommentSection is not defined" error
+    - app/assets/javascripts/components/comment_section.es6
+       1. create comment_section.es6 file im components folder
+       2. add 'CommentSection' class that extends from React.Component
+       3. add export for this this class
+    - app/assets/javascripts/application.js
+       1.  instead of importing to app.js use  comment_section.es6
+       2.  delete app.js from required files
+    - app/assets/javascripts/app.js
+       0.  delete this file
+    - app/assets/javascripts/components/comment_section.es6
+       1. add 'window' with 'CommentSection' object that equal to new 'CommentSection'
+          * u have warring about no 'render' function from console
+       2. add 'render' function to 'CommentSection' class
+       3. return some text in div from 'render' function
+       
+-------------------------------------------------------------------------------------------------------------------
+
                                                  Modules
 -------------------------------------------------------------------------------------------------------------------
  a. Adding files to vendor
