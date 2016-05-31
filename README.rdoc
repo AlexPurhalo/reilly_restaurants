@@ -53,6 +53,13 @@
           'bind' method should takes 'this' argument
        *. try replay using of 'addComment' function now it should works
 
+  c. Rendering of component
+     - app/assets/javascripts/components/comment.es6
+       1. change format from 'js.jsx' to 'es6'
+       2. change syntax of 'Comment' component to es6
+       3. add export of 'Comment' component
+
+
 -------------------------------------------------------------------------------------------------------------------
 
                                                  Modules
