@@ -1,6 +1,30 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                                              Actions form Context
+-------------------------------------------------------------------------------------------------------------------
+    1. Actions requirement for CommentSection
+        - go to comment section, find global 'childContextTypes' function
+        - add to return 'actions' key that equal to 'React.Types.func.isRequired'
+    2. Getting of child context in CommentSection
+        - in comment section find 'getChildContext' function
+        - then add 'actions' key that equal to 'this' 'actions'
+    3. Actions setting in CommentSection's constructor
+        - go to constructor in comment section
+        - add 'this' 'actions' that equal to Action object
+        - then delete window for Actions
+    4. Using of actions context in CommentForm
+        - go to CommentForm and find 'submitComment' function
+        - find there 'addComment' function of 'Actions' object
+        - replace Actions to 'this' 'context' 'actions'
+    5. Context settings for using in CommentForm
+        - to make 'this' 'context' 'actions' available we must define global function that allow to use context
+        - for this add 'static' 'get' 'contextTypes' function
+        - body of function should return 'actions' key that has 'React.PropTypes.func.isRequired' value
+    6. In browser
+        - try to type text into fields and sumbit them
+        - comments must successfully render to page
+-------------------------------------------------------------------------------------------------------------------
                                                Comment Form
 -------------------------------------------------------------------------------------------------------------------
                                                             app/assets/javascripts/components/comment_form.es6

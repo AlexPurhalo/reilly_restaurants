@@ -67,6 +67,12 @@
 //     - so let's use 'this' 'setState' method with 'this' 'defaultState' argument in 'submitComment' function
 //     - this setting should be just after actions that add a comment
 class CommentForm extends React.Component {
+    static get contextTypes() {
+        return {
+            actions: React.PropTypes.func.isRequired
+        }
+    }
+
     constructor() {
         super();
         this.defaultState = { author: "", body: ""};
@@ -77,13 +83,13 @@ class CommentForm extends React.Component {
         let prop = {};
         prop[event.target.name] = event.target.value;
         this.setState(prop);
-        console.log(prop)
+        // console.log(prop)
     }
 
     submitComment(event) {
         event.preventDefault();
-        Actions.addComment(this.state);
-        console.log(this.state);
+        this.context.actions.addComment(this.state);
+        // console.log(this.state);
         this.setState(this.defaultState);
     }
 
