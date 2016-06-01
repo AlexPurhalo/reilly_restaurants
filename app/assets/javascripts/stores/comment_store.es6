@@ -9,6 +9,10 @@ class CommentStore extends EventEmitter {
 
         AppDispatcher.register((payload) => {
             switch(payload.actionType) {
+                case Constants.SET_COMMENTS:
+                    this.setComments(payload.comment);
+                    this.emitChange();
+                    break;
                 case Constants.ADD_COMMENT:
                     this.addComment(payload.comment);
                     this.emitChange();
@@ -20,6 +24,12 @@ class CommentStore extends EventEmitter {
 
     }
 
+    setComments (comments) {
+        comments.forEach((comment) => {
+            this.addComment(comment)
+        });
+    }
+    
     addComment (comment) {
         // if we don't have id, we use length of array as id for every new comment
         // comment.id allow to not make copy with different id

@@ -1,7 +1,55 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
-                                              Actions form Context
+                                          Data Setting
+-------------------------------------------------------------------------------------------------------------------
+    1. Backing of comments rendering
+        - if you remember we were already dealing with comments rendering throw 'comments' template
+        - let's again back to this opening restaurant's 'show' view and adding the 'render' method
+        - to do this we're going to add second argument for 'react_render' method
+        - this argument gonna be 'comments' that equal to 'raw' method with 'render' argument that is method
+        - 'render' has 'template' that equal to link of comment's 'index' file location
+        - now let's look to source of one restaurant page
+        - there pay attention to 'div' with 'data-react-props' attribute
+        - this attribute should be equal to object with unreadable stuff
+        - this stuff is our rendering next step is make this readable parsing JSON format
+
+    2. Json parsing
+        - go to 'CommentSection' component's constructor function
+        - locate 'props' parameter to constructor's function
+        - to see on these data that we take as parameter add console.log with this parameter to function's body
+        - go to browser to ensure that parameter is Object with 'comments' array within another object inside
+        - this another object is comment's data: id, author, body and rank
+        - if data is empty can be that you havn't added comments from console or admin panel before
+        - to see the parsing of JSON object add 'JSON.parse' method with 'props.comments' parameter as argument
+        - as you see 'props.comments' is key of data that come as parameter
+        - now look and compare result before and after parsing in console, you should see different
+
+    3. Showing with setComments function
+        - inside of  'CommentSection' component's constructor add 'this.actions.setComments' method
+        - method should takes as argument JSON parsing of parameter's 'comments' key
+        - that this will come to work let's add this 'setComments' function
+        - for this fristly let's locate to 'constants' file
+        - when look to Constants object with different keys
+        - we want add one more key named as "SET_COMMENTS" with 'comments.set_comments' value
+        - in the second way go to 'actions' file and new global function to 'Actions' class
+        - there add 'static''setComments' function with 'params' parameter
+        - as body this function should take 'AppDispatcher' with 'dispatcher' method with object inside
+        - object inside should has 'actionType' key with 'Constants' object's 'SET_COMMENTS' key
+        - and second key named 'comments' that equal to 'params' parameter
+        - finally go to store and locate to its component's constructor where you will deal with its dispatcher
+        - in dispatcher add new case that is 'Constants' object's 'SET_COMMENTS' key
+        - case should has 'this''setComments' method should takes 'payload.comments' as argument
+        - and has 'this''emitChagne' method
+        - under constructor function we want define 'setComments' function that takes 'comments' as parameter
+        - body of function should has iteration of 'commetns' parameter
+        - for iteration use 'forEcah' method applying its to 'comments' parameter
+        - inside this method add function that take 'comment' as parameter
+        - body of function should has 'this''addComment' method with 'comment' parameter as argument
+        - at last try it in browser and you should see rendering of each comment's data
+
+-------------------------------------------------------------------------------------------------------------------
+                                                  Actions form Context
 -------------------------------------------------------------------------------------------------------------------
     1. Actions requirement for CommentSection
         - go to comment section, find global 'childContextTypes' function
