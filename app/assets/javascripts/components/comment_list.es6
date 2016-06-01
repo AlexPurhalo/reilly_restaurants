@@ -22,15 +22,15 @@ class CommentList extends React.Component {
     render() {
         return (
             <div>
-                {
-                    this.context.store.comments().map((comment) => {
-                        return (
-                            <Comment key={comment.id} {... comment} />
-                        );
-                    })
-                }
-            </div>
-        )
+            {
+                this.context.store.comments().map((comment, i) => {
+                return (
+                    <Comment key={i} {... comment} />
+                );
+            })
+    }
+    </div>
+    )
     }
 }
 
