@@ -1,6 +1,60 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                                   Component Tree
+-------------------------------------------------------------------------------------------------------------------
+    - app/controllers/comments_controller.rb
+        # add 'parent_id' property to 'comment_params' method
+        - def comment_params
+        -   params.require(:comment).permit(..., :parent_id)
+        - end
+
+     - app/views/comments/_comment.json.jbuilder
+      1. add a 'parent_id' property to other
+        - json.(comment, :id, :body, :author, :rank, :parent_id)
+
+      2. checking: browser
+        - go to source of page (Ctrl + U)
+        - Try ot find 'parent_id' under 'CommentSection' component (should almost one nested comment)
+        - back to browser and add new comment from form in 'CommentLost'
+        - check the just sended request and check its 'Preview'
+        - in 'Preview' u should see all poperties, like: 'author, body, id, rank, parent_id'
+        - come to admin panel and find added throw commets list's form
+        - this comment should has certain number in 'ancestry' field
+
+    - app/assets/javascript/stores/comment_store.es6
+      1. checking: browser
+        - look at data structure in 'CommentList' section
+        - elements don't have visual nesting each between other
+
+      2. go to 'comments' function and add 'parentId' parameter there
+        - comments (parentId) { ... }
+
+      3. add filter to 'this._comments' of 'comments' function
+        - return this._comments.filter( c => { return c && c.parent_id === parentId });
+
+    - app/assets/javascripts/components/comment_section.es6
+        # add 'parent_id' that equal to 'null' for 'CommentList' component in 'render' function
+        - <CommentList parent_id={null} />
+
+    - app/assets/javascripts/components/comment_list.es6
+        # add 'this.props.parent_id' as argument to 'comments' method in 'render' function
+        - this.context.store.comments(this.props.parent_id).map(...)
+
+    - app/assets/javascripts/components/comment.es6
+      1. add 'CommentList' component with 'parent_id' atribute to 'render' method of 'Comment' class
+        - <CommentList parent_id={this.props.id} />
+
+      2. add import of 'CommentList' component
+        - import CommentList from './comment_list'
+
+      3. checking: browser
+        - add new comment and check it in tree of comments with React tool
+        - add to throw added comment's form a new comment
+        - check its new comment in tree of components
+        - this comment should locate in its parent comment component
+
+-------------------------------------------------------------------------------------------------------------------
                                     Nesting Components
 -------------------------------------------------------------------------------------------------------------------
     - components/comment.es6
