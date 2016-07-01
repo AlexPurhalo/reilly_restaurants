@@ -1,6 +1,125 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                                        Sending Server Data
+-------------------------------------------------------------------------------------------------------------------
+    - api.es6
+        1. create api.es6 file in app/assets/javascripts folder
+
+        2. create Api class with its export:
+            - class Api {}
+            - export default Api
+
+        3. add global 'post' with 'route' and 'params' parameters
+            - static post(route, params) {}
+
+        5. in 'post' method
+            - return fetch(`${route}.json`, {}, { body: JSON.stringify(params) })
+
+    - actions.es6
+        1. class's import
+            - 'import Api from "/api";
+
+        2. in 'addComments' function:
+           - 'Api.post('/restaurants/1/comments', { comment: params});'
+
+    - checking: browser:
+        1. comment_section shoud be rendered as before
+        2. type something to form and send data
+        3. in console you should get 404 error after sending of this data
+
+    - api.es6
+        1. in '{}' of 'fetch' method in 'post' function
+            - {
+            -     method: 'post',
+            -     credentials: 'include',
+            -     headers: this.headers()
+            - }
+
+        2. add another global 'headers' function into 'Api' class
+           - static headers() {}
+
+        3. in 'return' of 'headers' function
+            - return {
+            -    'Accept': 'application/json',
+            -    'Content-Type': 'application/json',
+            -    'X-CRF-Token': this.token(),
+            -    'X-Requested-With': 'XMLHttpRequest'
+            - }
+
+        4. add global 'token' function to class
+            - static token() {}
+
+        5. in 'token' function add 'el' variable that equal to:
+            - let el = document.querySelector('meta[name="crf-token"]')
+            - return el ? el.getAttribute('conntent') : '';
+
+    - checking: browser, console
+        1. type in somethign to comment's form's fields and submit it
+        2. in console ensure that now you get 404 of 'POST' method after data sending
+        3. look to this request clother, and check the 'headers' of this
+        4. we should get 'content-type', 'accept', 'Host', 'x-crf-token' and 'x-requested-with' keys with data
+        5. in console with started server you should se 'Cannot render console with content type ...'
+
+    - config/routes.rb
+        1. add comments resource to restaurant resources
+         - resources :restaurants do
+         -     resources :comments
+         - end
+    - checking: browser
+        1. type in something to comment's form and click on submit
+        2. in console find 404 'POST' error and open its
+        3. in 'Preview' section u gonna have following error: "uninitialized constant CommentsController"
+
+    - app/controllers/comments_controller.rb
+        1. generate new 'comment' controller
+         - $ rails g controller comments
+
+        2. add 'create' action to created controller
+         - ...
+         -    def create
+         -    end
+         - ...
+
+    - checking: browser, console
+        1. type in something to comment's form and click on submit
+        2. in console with started server try to find 'Parameters: {"restaurant_id"=>"1", "comment"=>{}"}
+
+    - api.es6
+        1. add '_.merge()' to object that contain: 'method, headers, ...'
+           and object that contains 'body' key with its value
+           in 'fetch' method of 'post' function\
+         - (..., _.merge({ method: 'post', ... }), { body: ... }));
+
+    - checking: browser, console
+        1. after data sending you should have 'Request Payload' in 'Headers' of 'POST' request
+        2. 'Request Payload' should contains 'comment' object with its data
+        3. in console instead of empty object of 'comment' key you must see its data
+
+    - app/controllers/comments_controller.rb
+        1. add instance of comment in 'create' action that equal 'comment_params' of 'Comment' table
+         - @comment = Comment.create(comment_params)
+
+        2. define 'comment_params' method
+         - def comment_params
+         - end
+
+        3. in 'comment_params' method add applying of comment's parameters
+         - params.require(:comment).permit(:body, :author)
+
+        4. add 'merge' method in @comment instance to comment_params argument
+         - @comment = Commen.create(comment_prams.merge(restaurant_id: params[restaurant_id]))
+
+    - app/views/comments/create.json.jbuilder
+        1. add json partial with linking to 'comment' partial
+        - json.partial! @comment, partial: 'comment', as: comment
+
+    - checking: browser
+        1. add comment and check that 'POST' request has 200 status
+        2. refresh the page to ensure that recently added comment still in place
+
+
+-------------------------------------------------------------------------------------------------------------------
                                           Data Setting
 -------------------------------------------------------------------------------------------------------------------
     1. Backing of comments rendering

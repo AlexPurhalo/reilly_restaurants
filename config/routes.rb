@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'restaurants#index'
-  resources :restaurants
+  resources :restaurants do
+    resources :comments
+  end
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
 
