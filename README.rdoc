@@ -1,6 +1,47 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                                    Nesting Components
+-------------------------------------------------------------------------------------------------------------------
+    - components/comment.es6
+      1. add 'Form' import to comment file
+        - import 'CommentForm' from './comment_form';
+
+      2. add 'id' key for 'propTypes' function
+        - static get propTypes() { return { id: React.PropTypes.number, ..., ..., ... } }
+
+      3. add rendering of 'CommentForm' after comment's body
+       - ...
+       - <p>{this.props.body}</p>
+       - <CommentForm parent_id={this.props.id}/>
+       - ...
+
+      3. checking: browser
+       - inspect one of the form
+       - switch to React dev tool
+       - check first 'CommentForm' that located before 'CommentList', this should has no properties
+       - add new comment to list and check its properties, its should has certain 'parent_id'
+
+    - components/comment_form.es6
+       1. add console.log in 'submitComment' function
+        - submitoCmment(event) { console.log(this.props); ... }
+
+       2. in browser
+        - add comment throw main 'CommentForm' (that comes first)
+        - check in console that data has come as empty object
+        - add comment throw one of 'CommentForm' from 'CommentList'
+        - check that after submiting you have object with 'parent_id' in console
+
+       3. add mering for argument in 'addComment' method from 'submitComment' function
+        - ... this.context.actions.addComment(_.merge(this.state, { parent_id: this.props.parent_id })
+
+       4. checking: browser, console
+        - add new comment throw 'CommentList' form
+        - open console with started server
+        - find there 'Parameters' that equal to object with keys
+        - on of these keys should be 'parent_id' that equal to certain id number
+
+-------------------------------------------------------------------------------------------------------------------
                                         Working with Promises
 -------------------------------------------------------------------------------------------------------------------
     - actions.es6

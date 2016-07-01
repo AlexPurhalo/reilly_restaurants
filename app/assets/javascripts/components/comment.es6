@@ -1,5 +1,7 @@
+import CommentForm from './comment_form';
 class Comment extends React.Component {
     propTypes: {
+        id: React.PropTypes.number,
         author: React.PropTypes.string,
         body: React.PropTypes.string,
         rank: React.PropTypes.number
@@ -17,6 +19,7 @@ class Comment extends React.Component {
                   </li>
               </ul>
               <p>{this.props.body}</p>
+              <CommentForm parent_id={this.props.id}/>
           </div>
         );
     }

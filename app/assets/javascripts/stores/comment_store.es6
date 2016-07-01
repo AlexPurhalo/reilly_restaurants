@@ -34,8 +34,8 @@ class CommentStore extends EventEmitter {
         // if we don't have id, we use length of array as id for every new comment
         // comment.id allow to not make copy with different id
         this._comments[comment.id || this._comments.length] = comment;
-        console.log(this._comments);
-        console.log(this._comments.length)
+        // console.log(this._comments);
+        // console.log(this._comments.length)
     }
 
     comments () {
