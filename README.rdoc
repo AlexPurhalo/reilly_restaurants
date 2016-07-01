@@ -1,6 +1,45 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                                        Working with Promises
+-------------------------------------------------------------------------------------------------------------------
+    - actions.es6
+       1. go to 'addComment' function and find Api.post(...) method
+          then add 'then' method with 'resp => {}' argument'
+        - Api.post(...).then(resp => {})
+
+       2. add console.log with 'resp' argument in body of fnction with 'resp' parameter
+        - ... resp => { console.log(resp) } ...
+
+    - checking: browser
+       1. add comment and check console looking by 'Response'
+
+       2. look in 'Response' there u should see: 'type', 'status', 'body' ...
+
+    - actions.es6
+       1. in body of 'resp' function add 'return' wit 'resp.json()'
+        - ... resp => { return resp.json() }
+
+       2. add another 'then' method with 'comment' function inside
+        - Api.post(...).then(...).then( comment => {} )
+
+       3. add console.log of 'comment' in function with 'comment' parameter
+        - Api.post(...).then(...).then( comment => { console.log(comment) } )
+
+    - checking: browser
+       1. add some comment
+
+       2. in console  you should get array with commen's data including its 'id'
+
+    - actions.es6
+       1. locate AppDispatcher with its method instead of console.log(comment) in second 'then' method
+        - ...then( comment => { AppDispatcher.dispatch({ actionsType: ..., comment: ... }) } )
+
+       2. instead taking a 'params' as value of 'comment' key add there 'comment' parameter
+        - ...{ actionsType: ..., comment: comment }...
+
+
+-------------------------------------------------------------------------------------------------------------------
                                         Sending Server Data
 -------------------------------------------------------------------------------------------------------------------
     - api.es6
