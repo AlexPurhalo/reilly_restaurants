@@ -5,10 +5,11 @@ class CommentForm extends React.Component {
         }
     }
 
-    constructor() {
+    constructor(props) {
         super();
         this.defaultState = { author: "", body: ""};
         this.state = this.defaultState;
+        this.state.isReplying = props.isReplying || false
     }
 
     onFieldChange(event) {
@@ -26,8 +27,8 @@ class CommentForm extends React.Component {
     }
 
     render() {
-        return (
-            <form>
+        return ( <div>
+            <form className={this.props.isReplying ? '' : 'hide'}>
             <div className="form-group">
             <label>Author</label>
             <input
@@ -53,6 +54,7 @@ class CommentForm extends React.Component {
         Submit
         </button>
         </form>
+            </div>
     );
     }
 }

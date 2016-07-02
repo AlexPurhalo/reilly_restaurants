@@ -1,6 +1,70 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                                   Components Styling
+-------------------------------------------------------------------------------------------------------------------
+    - comment_list.es6
+        # go to rendering of component and convert it to 'ul' tag instead of a 'div'
+        - return <ul> ... </ul>
+
+    - comment.es6
+        # go to rendering of component and convert it ti 'li' tag
+        - return <li> ... </li>
+
+    - comment_form.es6
+      1. wrap form rendering to 'div' tag
+       - <div><form> ... </form></div>
+
+      2. add class with expression of state named 'isReplying' if its true show empty class '' else 'hide' class
+       - <form className={ this.state.isReplying ? '' : 'hide'> ... </form>
+
+      3. checking: browser
+       - all forms should disappear
+
+      4. add 'this.state.isReplying' that equal to 'props.isReplying' or 'false' to constructor
+       - constructor(props) { this.state.isReplying = props.isReplying || false}
+
+    - comment_section.es6
+      1. add 'isReplying' property that equal to true for rendering of 'CommentForm' component
+       - <CommentForm isReplying={true} />
+
+      2. checking: browser
+       - main form should be visible
+
+    - comment.es6
+      1. define 'replyText' constant in render method that equal to 'this.state.isReplying'
+         that take 'Hide' text if its true else 'Reply'
+       - const replyText = this.state.isReplying ? 'Hide' : 'True';
+
+      2. define 'this.state' for 'isReplying' that is 'false' by default, do this in constructor that you need to create
+       - constructor() {
+       -    super()
+       -    this.state = { isReplying: false }
+       - }
+
+      3. add button with 'onClick' property that equal to expression of 'this.onToggleReply' functin
+         as text it should take expression of 'replyText' constant
+       - <button onClick={this.onToggleReply.bind(this)>{replyText}</button>
+
+      4. add 'onToggleReply' function that change state of 'isReplying'
+       - onToggleReply() { this.setState({isReplying: !this.state.isReplying}) }
+
+      5. checking: browser
+       - click on 'Reply' button and this should change to 'Hide'
+       - do the same with 'Hide' button this should be changed to 'Reply' after clicking
+
+      6. add 'isReplying' property that equal to 'this.state.isReplying' to rendering of 'CommentForm' component
+       - <CommentForm isReplying={this.state.isReplying}
+
+    - comment_form.es6
+      1. in class name of 'form' tag in component rendering change 'state' of 'isReplying' to 'props'
+       - <form className={ this.props.isReplying? '' : 'hide'></form>
+
+      2. checking: browser
+       - click on 'Reply' button and you should get form
+       - click on 'Hide' and forms shoud disappear
+       
+-------------------------------------------------------------------------------------------------------------------
                                    Component Tree
 -------------------------------------------------------------------------------------------------------------------
     - app/controllers/comments_controller.rb

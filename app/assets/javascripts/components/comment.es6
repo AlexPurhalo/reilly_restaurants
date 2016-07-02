@@ -9,8 +9,20 @@ class Comment extends React.Component {
         rank: React.PropTypes.number
     };
 
+    constructor() {
+        super()
+
+        this.state = { isReplying: false }
+    }
+
+    onToggleReply() {
+        this.setState({isReplying: !this.state.isReplying})
+    }
+
     render() {
+        const replyText = this.state.isReplying ? 'Hide' : 'Reply';
         return (
+          <li>
           <div className="comment">
               <ul>
                   <li>
@@ -21,9 +33,14 @@ class Comment extends React.Component {
                   </li>
               </ul>
               <p>{this.props.body}</p>
-              <CommentForm parent_id={this.props.id}/>
+              <button
+                className="btn btn-default"
+                onClick={this.onToggleReply.bind(this)}f>
+                {replyText}</button>
+              <CommentForm parent_id={this.props.id} isReplying={this.state.isReplying}/>
               <CommentList parent_id={this.props.id} />
           </div>
+          </li>
         );
     }
 
