@@ -10,13 +10,17 @@ class Comment extends React.Component {
     };
 
     constructor() {
-        super()
+        super();
 
         this.state = { isReplying: false }
     }
 
     onToggleReply() {
         this.setState({isReplying: !this.state.isReplying})
+    }
+
+    onCommentSubmitted(event) {
+        this.setState({isReplying: false})
     }
 
     render() {
@@ -37,7 +41,10 @@ class Comment extends React.Component {
                 className="btn btn-default"
                 onClick={this.onToggleReply.bind(this)}f>
                 {replyText}</button>
-              <CommentForm parent_id={this.props.id} isReplying={this.state.isReplying}/>
+              <CommentForm
+                parent_id={this.props.id}
+                isReplying={this.state.isReplying}
+                onCommentSubmitted={this.onCommentSubmitted.bind(this)} />
               <CommentList parent_id={this.props.id} />
           </div>
           </li>

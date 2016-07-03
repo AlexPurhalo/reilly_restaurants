@@ -1,7 +1,35 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                                  Incorporating BiDirectional Data Flow
+-------------------------------------------------------------------------------------------------------------------
                                    Components Styling
+-------------------------------------------------------------------------------------------------------------------
+    - comment.es6
+      1. create 'onCommentSubmitted' function taht takes 'event' as parameter
+         its change state of 'isReplying' to false
+       - onCommentSubmitted(event) { this.setState({isReplying: false}) }
+
+      2. add 'onCommentSubmitted' property to rendering of 'CommentForm' that equal to its function
+       - <CommentForm onCommentSubmitted={this.onCommentSubmitted.bind(this) />
+
+    - comment_form.es6
+      1. add global 'get' 'PropTypes' function that returns React properties
+         of 'isReplying' boolean, 'onCommentSubmitted' function and 'parent_id' number
+       - static get PropTypes() {
+       -    return {
+       -        isReplying: React.PropTypes.bool,
+       -        onCommentSubmitted: React.PropTypes.func,
+       -        parent_id: React.PropTypes.number
+       -    }
+       - }
+
+      2. add if statement of 'onCommentSubmitted' function that use its functuin for 'submitComment' function that
+       - if (this.props.onCommentSubmitted) { this.props.onCommentSubmitted() }
+
+      3. checking: browser
+       - add comment for child form, form shoud disappear after adding a comment
+
 -------------------------------------------------------------------------------------------------------------------
     - comment_list.es6
         # go to rendering of component and convert it to 'ul' tag instead of a 'div'
@@ -63,7 +91,7 @@
       2. checking: browser
        - click on 'Reply' button and you should get form
        - click on 'Hide' and forms shoud disappear
-       
+
 -------------------------------------------------------------------------------------------------------------------
                                    Component Tree
 -------------------------------------------------------------------------------------------------------------------
