@@ -14,7 +14,6 @@
 //= require es6/system.js
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require bootstrap-sprockets
 //= require lodash
 //= require react
