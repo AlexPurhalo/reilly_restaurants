@@ -3,6 +3,7 @@ class Api {
         let el = document.querySelector('meta[name="csrf-token"]');
         return el ? el.getAttribute('content') : '';
     }
+    
     static headers() {
         return {
             'Accept': 'application/json',
@@ -11,6 +12,7 @@ class Api {
             'X-Requested-With': 'XMLHttpRequest'
         }
     }
+    
     static post(route, params) {
         return fetch(
             `${route}.json`, _.merge(
@@ -24,6 +26,17 @@ class Api {
                 }
             )
         );
+    }
+    
+    static put(route, params) {
+        return fetch(
+            `${route}.json`,
+            {
+                method: 'put',
+                credentials: 'include',
+                headers: this.headers()
+            }
+        )
     }
 }
 

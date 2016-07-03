@@ -1,6 +1,112 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                                Rank for Comments
+-------------------------------------------------------------------------------------------------------------------
+    - config/routes.rb
+      # add 'put' method for 'comments#upvote'
+      - ...
+      - resources :comments do
+      -  put 'upvote', to: 'comments#upvote'
+      - end
+      - ...
+
+    - app/controllers/comments_controllers.rb
+      # add upvote method with upvoting for certain comment
+      - def upvote
+      -   Comment.upvote(params[:comment_id]
+      -   @comment = Comment.find(params[:comment_id])
+      - end
+
+    - app/models/comment.rb
+      # add static 'upvote' function with updating of 'rank' attribute
+      - def self.upvote(id)
+      -   comment = find(id)
+      -   comment.update_attributes(rank: comment.rank.to_i + 1)
+      - end
+
+    - app/assets/javascripts/constants.es6
+      # add 'comments.upvote' for constant
+      - UPVOTE_COMMENT: 'comments.upvote'
+
+    - app/assets/javascripts/actions.es6
+      # add static 'upvoteComment' function for info putting
+      - static upvoteComment(comment) {
+      -     Api.put(`/restaurants/1/comments/${comment.id}/upvote`).then( resp => {
+      -         return resp.json()
+      -     }).then( comment => {
+      -         AppDispatcher.dispatch({
+      -             actionType: Constants.UPVOTE_COMMENT,
+      -             comment: comment
+      -         });
+      -     });
+      - }
+
+    - app/assets/javascripts/stores/comment_store.es6
+      # add case for comment upvoting in switch of AppDispatcher's register method that will show 'payload' to console
+      - ...
+      - case Constants.UPVOTE_COMMENT:
+      -   console.log(payload)
+      -   break;
+      - ...
+
+    - app/assets/javascripts/components/comment.es6
+      1. add button for comment upvoting in rendering of component
+      - <button onClick={this.onUpvote.bind(this)}>+1</button>
+
+      2. add its function
+      - onUpvote(event) { this.context.actions.upvoteComment(this.props) }
+
+      3. add context to make actions available for Comment component
+      - static get contextTypes() { return { actions: React.PropTypes.func.isRequired }}
+
+      4. checking: browser
+      - click on '+1' button and you will get error: 'Api.put is not a function'
+
+    - app/assets/javascripts/api.es6
+      1. add static 'put' function with put method
+      - static put(route, params) {
+      -   return fetch(route + '.json', {
+      -     method: 'put',
+      -     credentials: 'include',
+      -     headers: this.headers()
+      -   })
+      - }
+
+      2. checking: browser
+      - now try to put vote and you will get 500 error with missing template
+
+    - app/controllers/comments_controller.rb
+
+      1. add render of 'create' to 'upvote' method
+      - ...
+      -   render :create
+      - end
+
+      2. checkign: browser
+      - now after putting you should get object with its 'actionType' and 'comment' object
+      - in preview you should get its keys as: 'author', 'body', ... and at last 'rank' key
+      - putt rank again and your rank should increase
+
+    - app/assets/javascripts/components/comment.es6
+      # add showing of current comment's rank to render method
+      - render() { return { ... {this.props.rank } }
+
+    - app/assets/javascripts/stores/comment_store
+      1. add to switch of  AppDispatcher's register payloading with emit changing
+      - ...
+      - case Constants.UPVOTE_COMMENT:
+      -   this.upvote(payload.comment);
+      -   this.emitChange();
+      -   break;
+      - ...
+
+      2. add 'upvote' function that increase comment's rank
+      - upvote (comment) {
+      -     this._comments[comment.id].rank++;
+      - }
+
+-------------------------------------------------------------------------------------------------------------------
                                   Incorporating BiDirectional Data Flow
 -------------------------------------------------------------------------------------------------------------------
                                    Components Styling

@@ -2,6 +2,12 @@ import CommentForm from './comment_form';
 import CommentList from './comment_list';
 
 class Comment extends React.Component {
+    static get contextTypes() {
+        return {
+            actions: React.PropTypes.func.isRequired
+        }
+    }
+
     propTypes: {
         id: React.PropTypes.number,
         author: React.PropTypes.string,
@@ -23,6 +29,10 @@ class Comment extends React.Component {
         this.setState({isReplying: false})
     }
 
+    onUpvote(event) {
+        this.context.actions.upvoteComment(this.props)
+    }
+
     render() {
         const replyText = this.state.isReplying ? 'Hide' : 'Reply';
         return (
@@ -41,6 +51,8 @@ class Comment extends React.Component {
                 className="btn btn-default"
                 onClick={this.onToggleReply.bind(this)}f>
                 {replyText}</button>
+              <button
+                onClick={this.onUpvote.bind(this)}>+!</button>
               <CommentForm
                 parent_id={this.props.id}
                 isReplying={this.state.isReplying}
