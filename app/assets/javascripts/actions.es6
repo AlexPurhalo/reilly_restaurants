@@ -3,39 +3,35 @@ import Constants from "/constants";
 import Api from "/api";
 
 class Actions {
-    static addComment(params) {
-        Api.post('/restaurants/1/comments', {
+    constructor(restaurantId) {
+        this.restaurantId = restaurantId
+    }
+
+    setComments(params) {
+        AppDispatcher.dispatch({
+            actionType: Constants.SET_COMMENTS,
+            comments: params
+        });
+    }
+
+    upvoteComment(comment) {
+        Api.put(`/restaurants/${this.restaurantId}/comments/${comment.id}/upvote`).then( comment => {
+            AppDispatcher.dispatch({
+                actionType: Constants.UPVOTE_COMMENT,
+                comment: comment
+            });
+        });
+    }
+
+    addComment(params) {
+        Api.post(`/restaurants/${this.restaurantId}/comments`, {
             comment: params
-        }).then(resp => {
-            return resp.json()
-        }).then(comment => {
+        }).then( comment => {
             AppDispatcher.dispatch({
                 actionType: Constants.ADD_COMMENT,
                 comment: comment
             });
-        });
-
-
-    }
-    
-    static setComments(params) {
-        AppDispatcher.dispatch({
-            actionType: Constants.SET_COMMENTS,
-            comment: params
         })
-    }
-
-    static upvoteComment(comment) {
-        Api.put(`/restaurants/1/comments/${comment.id}/upvote`)
-            .then( resp => {
-                return resp.json()
-            })
-            .then( comment => {
-                AppDispatcher.dispatch({
-                    actionType: Constants.UPVOTE_COMMENT,
-                    comment: comment
-                })
-            })
     }
 }
 export default Actions

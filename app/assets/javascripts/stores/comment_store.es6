@@ -10,7 +10,7 @@ class CommentStore extends EventEmitter {
         AppDispatcher.register((payload) => {
             switch(payload.actionType) {
                 case Constants.SET_COMMENTS:
-                    this.setComments(payload.comment);
+                    this.setComments(payload.comments);
                     this.emitChange();
                     break;
                 case Constants.ADD_COMMENT:
@@ -22,7 +22,6 @@ class CommentStore extends EventEmitter {
                     this.emitChange();
                     break;
                 default:
-                // NO-OP
             }
         });
 
@@ -35,11 +34,7 @@ class CommentStore extends EventEmitter {
     }
     
     addComment (comment) {
-        // if we don't have id, we use length of array as id for every new comment
-        // comment.id allow to not make copy with different id
         this._comments[comment.id || this._comments.length] = comment;
-        // console.log(this._comments);
-        // console.log(this._comments.length)
     }
 
     upvote (comment) {
@@ -47,7 +42,10 @@ class CommentStore extends EventEmitter {
     }
 
     comments (parentId) {
-        return this._comments.filter( c => { return c && c.parent_id === parentId })
+        return _.chain(this._comments.filter( c => { return c && c.parent_id === parentId; }))
+            .sortBy('rank')
+            .reverse()
+            .value();
     }
 
     addChangeListener (callback) {
