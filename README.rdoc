@@ -1,6 +1,32 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                               RealTime
+-------------------------------------------------------------------------------------------------------------------
+    - app/controllers/comments_controller.rb
+      1. create index action of comment's controller
+      - def index
+      -   @comments = Comment.where(restaurant_id: params[:restaurant_id])
+      - end
+
+      2. localhost:300/restaurants/1/comments.json
+      - json data tha represents as array that contains objects with comments information
+
+    - app/assets/javascripts/actions.es6
+      1. add 'watch' function with get method comments setting
+      - watch() {
+      -   Api.get(`/restaurants/${this.restaurantId}/comments`).then( comments => {
+      -     this.setComments(comments);
+      -   });
+      - }
+
+      2. create 'watchInterval' instance in constructor that comes equal to setting of interval of 'watch' function
+      - constructor(restaurantId) {
+      -   this.restaurantId = restaurantId
+      -   this.watchInterval = setInterval(this.watch.bind(this), 1000);
+      - }
+      
+-------------------------------------------------------------------------------------------------------------------
                                 Rank for Comments
 -------------------------------------------------------------------------------------------------------------------
     - config/routes.rb
