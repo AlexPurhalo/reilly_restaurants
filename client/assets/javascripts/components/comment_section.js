@@ -1,7 +1,7 @@
-import Actions from '/actions';
-import CommentStore from '/stores/comment_store';
-import CommentList from '../components/comment_list';
-import CommentForm from '../components/comment_form'
+import Actions from '../actions';
+import CommentStore from '../stores/comment_store';
+import CommentList from './comment_list';
+import CommentForm from './comment_form'
 class CommentSection extends React.Component {
     constructor(props) {
         super();

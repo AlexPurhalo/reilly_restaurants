@@ -1,6 +1,83 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                    Moving Sprockets Code To Webpack
+-------------------------------------------------------------------------------------------------------------------
+   - app/assets/javascripts/
+    $ rename 's/.es6/.js/' *.es6
+
+   - app/assets/javascripts/stores
+    $ rename 's/.es6/.js/' *.es6
+
+   - app/assets/javascripts/components
+    $ rename 's/.es6/.js/' *.es6
+
+   - app/assets/javascripts/
+    $ mv api.js app_dispatcher.js constants.js ../../../client/assets/javascripts
+    $ mv stores ../../../client/assets/javascripts
+    $ mv components ../../../client/assets/javascripts
+    $ mv actions.js ../../../client/assets/javascripts
+    $ rm components.js
+
+   - app/assets/javascripts/application.js
+    1. delete already not required stuff
+    - //= require jquery
+    - //= requier jquer_ujs
+    - //= require bootstrap-sprockets
+    - //= require generated/client-bundle
+
+    2. localhost:3000/restaurants/
+    - use Ctrl + U to look at source of page
+    - find script with '/assets/generated/client-bundle.slef-cb...' path and open its
+    - this file should contain javascript stuff that we were dealing
+
+   - client/assets/javascripts/App.js
+    1. add alert of any stuff
+    - aler('nice, this works')
+
+    2. localhost:3000/restaurants/
+    - you should get alert with added text
+
+    3. back to file and instead of text alert add import of CommentSection
+    - import CommentSection from './components/comment_section'
+
+    4. check console with started webpack
+    - you should get whole of errors that say webpack can't find certain module
+
+   - client/assets/javascripts/components/
+    # add changes to path of every component
+
+    1. comment_store.js
+    - import CommentStore from '../stores/comment_store';
+    - import Actions from '../actions';
+    - import CommentList from './comment_list';
+    - import CommentForm from './comment_form';
+
+    2. comment_list.js
+    - import Comment from './comment';
+
+    3. comment.js
+    - import CommentList from './comment_list';
+    - import CommentForm from './comment_form';
+
+   - client/assets/javascripts/actions.js
+    # actions.js
+    - import AppDIspatcher from './app_dispatcher';
+    - import Constants from './constants';
+    - import Api from './api';
+
+   - client/assets/javascripts/stores/comment_store.js
+    1. comment_store.js
+    - import AppDispatcher form '../app_dispatcher';
+    - import Constants from '../constants';
+
+    2. localhost:3000/restaurants
+    - check source of page
+    - find client_bundle file
+    - try to find 'CommentSection' or other component
+    - also go to page of one restaurant, in console you should get error like: 'Flux... is not defined'
+
+-------------------------------------------------------------------------------------------------------------------
                     Node Dependencies
 -------------------------------------------------------------------------------------------------------------------
    - client/package.json
