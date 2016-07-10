@@ -21,3 +21,9 @@
 
 # Gemfile.logck ignore
 Gemfile.lock
+
+# node modules
+/client/node_modules/
+
+# generated with webpack file
+app/assets/javascripts/generated/client-bundle.js

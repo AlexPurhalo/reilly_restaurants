@@ -1,6 +1,64 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                               Webpack Setting Up
+-------------------------------------------------------------------------------------------------------------------
+    - client/ (soft installing)
+     # create client folder in your application
+     # install webpack with npm tha require installed nodejs
+     $ sudo apt-get install nodejs
+     $ npm
+     $ sudo npm install -g webpack
+
+    - client/webpack.rails.config.js
+     # create rails config file with requirements of config file
+     - const config = require('./webpack.common.config')
+
+    - client/1webpack.common.config.js
+     1. create commin config file and add path requirement
+     - const path = require('path')
+
+     3. add module exports with its configuration
+     - module.exports = {
+     -   context: __dirname,
+     -   entry: ['./assets/javascripts/App'],
+     -   resolve: {
+     -     root: [path.join(__dirname, 'scripts'),
+     -            path.join(__dirname, 'assets/javascripts')],
+     -     extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.config.js']
+     -   },
+     -   module: {
+     -     loaders: []
+     -   }
+     - }
+
+    - client/webpack.rails.common.js
+     1. add config output with its settings
+     - config.output = {
+     -   filename: 'client-bundle.js',
+     -   path: '../app/assets/javascripts/generated'
+     - };
+
+     2. add module exports of config instance
+     - module.exports = config
+
+     3. checking: console
+     - locate to client folder throw console
+     - $ webpack
+     - make sure that as output u get using instruction
+     - $ webpack -w --config webpack.rails.config.js
+     - as output u should get error that says that webpack can't find assets/javascripts/App file
+
+    - client/assets/javascripts/App.js
+     # create this file and add some comment there
+
+
+    - app/assets/javascripts/generated/client-bundle.js
+    # you should see compiled data
+    # notice: pay attention file located not fron 'clien' folder
+    # also u can try changed data from App.js file in client folder and look have changes info in compiled file
+
+-------------------------------------------------------------------------------------------------------------------
                                RealTime
 -------------------------------------------------------------------------------------------------------------------
     - app/controllers/comments_controller.rb
@@ -25,7 +83,7 @@
       -   this.restaurantId = restaurantId
       -   this.watchInterval = setInterval(this.watch.bind(this), 1000);
       - }
-      
+
 -------------------------------------------------------------------------------------------------------------------
                                 Rank for Comments
 -------------------------------------------------------------------------------------------------------------------
