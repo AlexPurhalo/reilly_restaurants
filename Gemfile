@@ -60,14 +60,6 @@ gem 'haml'
 # Forms made easy!
 gem 'simple_form'
 
-# Compile your JSX on demand or precompile for production.
-gem 'react-rails'
-
-# Use Facebook's Flux dispatcher and Node EventEmitter in your Rails project.
-gem 'flux-rails-assets'
-
-# lodash for the Rails asset pipeline
-gem 'lodash-rails'
-
-# A Sprockets transformer that converts ES6 code into vanilla ES5 with Babel JS.
-gem 'sprockets-es6', '0.6.1'
+# Sprockets is a Rack-based asset packaging system that concatenates
+# and serves JavaScript, CoffeeScript, CSS, LESS, Sass, and SCSS.
+gem 'sprockets', '~> 3.6', '>= 3.6.3'

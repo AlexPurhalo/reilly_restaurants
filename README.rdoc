@@ -1,6 +1,36 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                    Bringing Rails and Webpack - II part (page rendering)
+-------------------------------------------------------------------------------------------------------------------
+    - config/application.rb
+     # delete es6 sprockets configuration stuff
+
+    - Gemfile
+     # delete not required stuff
+
+    - app/views/restaurants/show.html.haml
+     # add script configuration stuff
+     - <script>
+     -  document.addEventListener('DOMContentLoaded', function(ev) {
+     -    renderReact('commentSection', CommentSection, {
+     -      restaurantId: <%= @restaurant.id %>,
+     -      comments: <%= raw(render(template: 'comments/index.json.jbuilder')) %>
+     -    });
+     - });
+     - </script>
+
+    - app/client/assets/javascripts/components/comment_section.js
+     1. delete JSON parsing of comments inside constructor for setComments method
+     - cnostructor(props) {
+     -   ...
+     -   this.actions.setComments(props.comments);
+     - }
+
+     2. browser: checking
+     - now components shoud render to page
+
+-------------------------------------------------------------------------------------------------------------------
                     Bringing Rails and Webpack
 -------------------------------------------------------------------------------------------------------------------
  I. Modules Adding
@@ -65,9 +95,6 @@
    2. localhost:3000
    - enter: window.renderReact('commentSection', CommentSection, {restaurantId: 2, comments: []})
    - now you should get all your elements rendered
-
-
-
 
 -------------------------------------------------------------------------------------------------------------------
                     Moving Sprockets Code To Webpack
