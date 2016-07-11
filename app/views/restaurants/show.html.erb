@@ -14,14 +14,5 @@
     <!--.restaurant-header-->
       <!--%h2 Your mind is important, do you like this?-->
     <!--%hr-->
-<div id="commentSection">
-</div>
-<script>
-  document.addEventListener('DOMContentLoaded', function(ev) {
-    renderReact('commentSection', CommentSection, {
-      restaurantId: <%= @restaurant.id %>,
-      comments: <%= raw(render(template: 'comments/index.json.jbuilder'))%>
-    });
-  });
-</script>
-
+<% props = "{restaurantId: #{@restaurant.id}, comments: #{raw(render(template: 'comments/index.json.jbuilder'))}}" %>
+<%= client('CommentSection', 'cs', props)%>
