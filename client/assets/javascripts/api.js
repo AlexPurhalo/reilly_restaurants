@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 class Api {
     static token() {
         let el = document.querySelector('meta[name="csrf-token"]');

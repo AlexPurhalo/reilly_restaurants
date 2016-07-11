@@ -1,6 +1,75 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                    Bringing Rails and Webpack
+-------------------------------------------------------------------------------------------------------------------
+ I. Modules Adding
+   1. app_dispatcher.js
+    # import Dispatcher and delete 'Flux' keyword from new object creating
+    - import { Dispatcher } from 'flux';
+    - let AppDispatcher = new Dispatcher();
+
+   2. components/comment_store.js
+    # add import of EventEmitter from events
+    - import { EventEmitter } from 'events';
+
+   3. components/comment_seciton.js
+    - import React from 'react';
+
+   4. components/comment_list.js
+    - import React from 'react';
+
+   5. components/comment_form.js
+    - import React from 'react';
+
+   6. components/comment.js
+    - import React from 'react';
+
+   7. localhoset:3000
+    - now u shouldn't get any error in console
+
+ II. Changing to webpack format in view
+  - app/views/restaurants/show.hrml.haml
+   # delete react_component(...) and instead just add tag with id 'commentSection'
+   - %ul.comments
+   -   %li#commentSection
+
+  - app/client/assets/javascripts/App.js
+   1. render elements from App.js
+   - import React from 'react';
+   - window.renderReact = function(id, component, props) {
+   -   React.render(React.createElement(component, props), document.getElementById(id));
+   - };
+
+   2. localhost:3000
+   - open console and type in: 'window.renderReact'
+   - u should get function with its parameters: function window.renderReact(id, component, props)
+   - type in same stuff but at this time with parameters: 'window.renderReact('commentSection', CommentSection, {})
+   - u should get error about undefined lodash's function
+   - try to find source of problem for future fixing
+
+  - app/client/assets/javascripts/api.js
+   1. add import of lodash
+   - import _ from 'lodash';
+
+   2. localhoset:3000
+   - now u should get error about problem in JSON
+
+  - app/client/assets/javascripts/components/comment_section
+   1. delete JSON parsing for 'setComments' function
+   - constructor() {
+   -   ...
+   -   this.actions.setComments(props.comment);
+   - }
+
+   2. localhost:3000
+   - enter: window.renderReact('commentSection', CommentSection, {restaurantId: 2, comments: []})
+   - now you should get all your elements rendered
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
                     Moving Sprockets Code To Webpack
 -------------------------------------------------------------------------------------------------------------------
    - app/assets/javascripts/

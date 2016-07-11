@@ -15,5 +15,5 @@
       %h2 Your mind is important, do you like this?
     %hr
     %ul.comments
-      %li= react_component('CommentSection', restaurantId: @restaurant.id, comments: raw(render(template: 'comments/index.json.jbuilder')))
+      %li#commentSection
 
