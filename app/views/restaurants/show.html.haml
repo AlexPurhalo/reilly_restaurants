@@ -1,0 +1,21 @@
+.row.restaurant
+  .col-md-3
+    %h1= @restaurant.name
+    %p
+      Address:
+      = @restaurant.address
+    =link_to "back", root_path, class: "btn btn-primary"
+    =link_to "Edit", edit_restaurant_path, class: "btn btn-primary"
+    =link_to "Delete", restaurant_path, method: :delete, data: { confirm: "Sure?" }, class: "btn btn-primary"
+  .col-md-9
+    %p.restaurant-description= @restaurant.description
+.row.restaurant
+  .col-md-12
+    .restaurant-header
+      %h2 Your mind is important, do you like this?
+    %hr
+    - props = JSON.parse("{\"restaurantId\": #{@restaurant.id}, \"comments\": #{raw(render(template: 'comments/index.json.jbuilder'))}}")
+    - if params[:client].present?
+      = client('CommentSection', 'cs', props)
+    - else
+      = isomorphic('CommentSection', 'cs', props)

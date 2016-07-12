@@ -66,3 +66,6 @@ gem 'sprockets', '~> 3.6', '>= 3.6.3'
 
 # Process manager for applications with multiple components
 gem 'foreman', '~> 0.82.0'
+
+# Makes http fun! Also, makes consuming restful web services dead easy.
+gem 'httparty', '~> 0.13.7'

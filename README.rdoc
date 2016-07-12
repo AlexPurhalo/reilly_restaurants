@@ -1,6 +1,176 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                    Writing A Component Rendering Server
+-------------------------------------------------------------------------------------------------------------------
+    - client/assets/javascripts/component_render_server.js
+     1. create file for component rendering with server and add requirements
+     - require('babel-core/register')({experimental: true});
+     -
+     - var bodyParser = require('body-parser');
+     - var express = require('express');
+     - var app = express();
+     -
+     - app.use(bodyParser.urlencoded());
+     - app.use(bodyParser.json());
+     -
+     - app.get('/', function(req, res) {
+     -   res.end('hello');
+     - });
+     - app.listen(3001);
+
+     2. install supervisor
+     $ npm install -g supervisor
+
+     3. go to client/assets/javascripts folder and run supervisor
+     - supervisor --harmony component_render_server.js
+
+     4. checking: browser
+     - localhost:3001
+     - here you should get 'hello' message
+
+     5. add add render arguments of post method
+     - app.post('/', function( req, res) {
+     -    renderToString(req.body.component, req.body.props, function(str) {
+     -      res.end(str);
+     -    });
+     -  });
+
+     6. add renderToString function
+     - function renderToString(component, props, callback) {
+     -    var component = require('./components/' + toUnderscore(component));
+     -    callback(React.renderToString(React.createElement(component, props)));
+     -  }
+
+     7. add requirement of React
+     - var React = require('react');
+
+     8. add toUnderscore function
+     - function toUnderscore(str) {
+     -   return str.replace(/([A-Z])/g, function ($1) { return "_" + $1.toLowerCase(); }).slice(1);
+     - }
+
+    - client/assets/javascripts/stores/comment_store.js
+     # add requirement of lodash
+     - import _ from 'lodash'
+
+    - Procfile.dev
+     1. add supervisot to configurations
+     - component_render_server: supervisor --harmony client/assets/javascripts/component_render_server.js
+
+     2. run foreman
+     $ foreman start --procfile=Procfile.dev
+
+     3. checking: browser
+     - localhost:3001
+     - error that says 'Cannot GET/'
+
+    - Gemfile
+     1. add httparty gem
+     - gem 'httparty', '~> 0.13.7'
+
+     2. make active this gem
+     $ gem install httparty
+
+     3. restart the server
+     $ foreman start -procfile=Procfile.dev
+
+    - app/views/restaurants/show.html.erb
+     # add isomorphic rendering
+     - <%= isomprphic('CommentSection', 'cs', props) %>
+
+    - app/helpers/react_helper
+     # add isomorphic method with its functionality
+     - def isomorphic(component, id, props)
+     -   resp = HTTParty.post 'http://localhost:3001', body: { component: component, props: props }.to_json,
+     -     headers: {'ContentType' => 'application/json' }
+     -   resp
+     - end
+
+    - client/assets/javascripts/component_render_server.js
+     1. returning of 'res' using in app.post(...) method
+     - app.post('/', function( req, res) {
+     -   return res.end(req.body.props);
+     -   ...
+     - });
+
+     2. checking: browser
+     - now in source of code you should get data with second comment array that contains different stuff
+     - this stuff need the parsing, now this seems like this:  '... comments: [{&qout;id....}] ...'
+
+    - app/views/restaurants/show.html.erb
+     1. add JSON parsing for comments array
+     # - <% props = JSON.parse("{\"restaurantId\": #{@restaurant.id},
+     # -                         \"comments\": #{raw(render(template: 'comments/index.json.jbuilder'))}}") %>
+
+    - app/helpers/react-helper.rb
+     # add to_json method for props in react rendering
+     - ...
+     -   renderReact('#{id}', '#{component}', #{props.to_json});
+     - ...
+
+    - client/assets/javascripts/component_render_server.js
+     1. add toString method for props of 'res'
+     - ...
+     -   return res.end(req.body.props.toString());
+     - ...
+
+     2. checking: browser
+     - in page's source you should get [Object Object]
+
+     3. delete return of res
+
+     4. checking: browser
+     - now you should get react's stuff on your page
+
+    - app/helpers/react_helper.rb
+     # add dif with applyaing of html_safe
+     - def isomorphic(component, id, props)
+     -   resp = HTTParty.post 'http://localhost:3001', body: { component: component, props: props}.to_json, headers: {'Content-Type' => 'application/json'}
+     -   sc = script(component, id, props)
+     -   "<div id='#{id}'>#{resp}</div>#{sc}".html_safe
+     - end
+
+    - app/views/restaurants/show.html.erb
+     1. change cs for special types
+     - <%= client('CommentSection', cs_client, props)%>
+     - <%= isomorphic('CommentSection;, cs_server, props)%>
+
+     2. checking: browser
+     - check the source of page and you will see that your application has isomorphic rendering
+     - this rendering seemed weirdo for reading
+
+     3. delete client rendering to aviud double rendering of data to page
+     - <%= isomorphic('CommentSection;, cs_server, props)%>
+
+     4. checking: browser
+     - now should be rendered only data from cs_server
+
+     5. add condition for client and server
+     - <% if params[:client].present? %>
+     -   <%= client('CommentSection', 'cs', props) %>
+     - <% else %>
+     -   <% isomorphic('CommentSection', 'cs', props) %>
+     - <% end %>
+
+     6. checking: browser
+     - view-source:http://localhost:4000/restaurants/1?client=1
+     - should return only client type
+     - view-source:localhost:4000/restaurants/1
+     - should return isomorphic type
+
+   - client/assets/javascripts/actions.js
+     1. back watchInterval to constructor if it was under comment
+     - constructor(props) {
+     -   ...
+     -   this.watchInterval = setInterval(this.watch.bind(this), 1000)
+     - }
+
+     2. check does everythink works in real time
+
+
+
+-------------------------------------------------------------------------------------------------------------------
                     Building Processes With Foreman
 -------------------------------------------------------------------------------------------------------------------
     - Gemfile
