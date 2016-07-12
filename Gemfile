@@ -63,3 +63,6 @@ gem 'simple_form'
 # Sprockets is a Rack-based asset packaging system that concatenates
 # and serves JavaScript, CoffeeScript, CSS, LESS, Sass, and SCSS.
 gem 'sprockets', '~> 3.6', '>= 3.6.3'
+
+# Process manager for applications with multiple components
+gem 'foreman', '~> 0.82.0'

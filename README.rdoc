@@ -1,6 +1,27 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                    Building Processes With Foreman
+-------------------------------------------------------------------------------------------------------------------
+    - Gemfile
+     1. add last foreman gem and install it
+     - gem 'foreman', '~> 0.82.0'
+
+     2. running: console
+     $ gem install foreman
+
+    - Procfile.dev
+     1. create this file and add its configuration
+     - web: rails s -p 4000
+     - client: sh -c 'cd client && $(npm bin)/webpack -w --config webpack.rails.config.js'
+
+     2. server running: console
+     $ foreman start --procfile=Procfile.dev
+
+     3. checking: browser
+     - localhost:4000
+
+-------------------------------------------------------------------------------------------------------------------
                     Bringing Rails and Webpack - III part (refactor with helper)
 -------------------------------------------------------------------------------------------------------------------
     - app/views/restaurants/show.html.erb
