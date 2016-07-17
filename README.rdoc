@@ -1,6 +1,50 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                    Setting Up Rspec
+-------------------------------------------------------------------------------------------------------------------
+    - Gemfile
+     1. Add the gems to development test group
+     # - gem 'capybara'
+     # - gem 'rspec'
+     # - gem 'rspec-rails', '~> 3.5'
+     # - gem 'capybara-screenshot'
+     # - gem 'poltergeist'
+     # - gem 'launchy'
+     # - gem 'simplecov'
+     # - gem 'database_cleaner'
+
+     2. Install gems
+     $ bundle install
+
+    - /
+     1. Remove test folder
+     $ rm -rf test
+
+     2. Generate rspec gem's stuff
+     $ rails g rspce:install
+     # output: generated spec folder with files
+
+     3. Check that rspec is works
+     $ rspec
+     # output: count of examples and failures tests
+
+    - spec/sanity_spec.rb
+     1. create fil with requirement of rails helper
+     - require 'rails helper'
+
+     2. describe sanity test with check test
+     - describe :sanity do
+     -   it 'works!' do
+     -     expect(1).to eq 1
+     -   end
+     - end
+
+     3. check that test works in console
+     $ rspec
+     # output: 1 example, 0 failures
+
+-------------------------------------------------------------------------------------------------------------------
                     Writing A Component Rendering Server
 -------------------------------------------------------------------------------------------------------------------
     - client/assets/javascripts/component_render_server.js

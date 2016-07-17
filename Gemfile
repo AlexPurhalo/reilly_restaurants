@@ -27,14 +27,42 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-end
 
-group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # Capybara is an integration testing tool for rack based web applications.
+  # It simulates how a user would interact with a website
+  gem 'capybara', '~> 2.7', '>= 2.7.1'
+
+  # BDD for Ruby
+  gem 'rspec', '~> 3.5'
+
+  # rspec-rails is a testing framework for Rails 3+.
+  gem 'rspec-rails', '~> 3.5', '>= 3.5.1'
+
+  # When a Cucumber step fails, it is useful to create a screenshot image and HTML file of the current page
+  gem 'capybara-screenshot', '~> 1.0', '>= 1.0.13'
+
+  # Poltergeist is a driver for Capybara that allows you to run your tests on a headless WebKit browser,
+  # provided by PhantomJS.
+  gem 'poltergeist', '~> 1.10'
+
+  # Launchy is helper class for launching cross-platform applications in a fire and forget manner.
+  # There are application concepts (browser, email client, etc) that are common across all platforms,
+  # and they may be launched differently on each platform.
+  # Launchy is here to make a common approach to launching external application from within ruby programs.
+  gem 'launchy', '~> 2.4', '>= 2.4.3'
+
+  # Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of
+  # coverage across test suites
+  gem 'simplecov', '~> 0.12.0'
+
+  # Strategies for cleaning databases. Can be used to ensure a clean state for testing.
+  gem 'database_cleaner', '~> 1.5', '>= 1.5.3'
 end
 
 # RailsAdmin is a Rails engine that provides an easy-to-use interface for managing your data.
