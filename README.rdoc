@@ -1,7 +1,53 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                    Code Coverage with Simplecov
+-------------------------------------------------------------------------------------------------------------------
                     Setting Up Rspec
+-------------------------------------------------------------------------------------------------------------------
+    - Gemfile
+     #. Ensure that you have simplecov gem in your Gemfile
+     - group :development, :test do
+     -   ...
+     -   gem 'simplecov'
+     - end
+
+    - spec/rails_helper.rb
+     #. Add requirement and start configuration of simplecov gem
+     - require 'simplecov'
+     - SimpleCov.start
+
+    - spec/sanity_spec.rb
+     1. Add requirement of reails helper
+     - require 'rails_helper'
+
+     2. run spec in console
+     $ rspec
+     # output: procent of coverage (for now 100%)
+
+    - spec/models/restaurants_spec.rb
+     1. Create file and add requirement of rails helper
+     - require 'rails_helper'
+
+     2. Describe Restaurant model
+     - describe Restaurant do
+     - end
+
+     3. Check procent of coverage
+     $ rspec
+     # output: new count of LOCs and new procent of coverage
+
+    - coverage/index.html
+     #. Open this file to look by it
+
+    - spec/rails_helper.rb
+     1. Add eager_load for coverage
+     - Rails.application.eager_load! if ENV['COVERAGE']
+
+     2.check 1 coverage
+     $ COVERAGE=1 rspec
+     # output: coverage procent of every model and controller
+
 -------------------------------------------------------------------------------------------------------------------
     - Gemfile
      1. Add the gems to development test group

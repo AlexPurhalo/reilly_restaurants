@@ -27,3 +27,5 @@ Gemfile.lock
 
 # generated with webpack file
 app/assets/javascripts/generated/client-bundle.js
+
+coverage/
