@@ -1,9 +1,114 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
-                    Code Coverage with Simplecov
+                    Writing Model Spec
 -------------------------------------------------------------------------------------------------------------------
-                    Setting Up Rspec
+    - spec/rails_helper.rb
+     #. Add configurations of DatabaseCleaner inside RSpec
+     - RSpec.configure do |config|
+     -   ...
+     -   config.before(:suite) do
+     -     DatabaseCleaner.strategy = :truncation
+     -     DatabaseCleaner.clean_with :truncation
+     -   end
+     -
+     -   config.around(:each) do |example|
+     -     DatabaseCleaner.cleaning do
+     -         example.run
+     -      end
+     -   end
+     -   ...
+     - end
+
+    - spec/models/restaurant_spec.rb
+     1. Add test for to_s method inside Restaurant
+     - it 'returns name when to_s is called' do
+     -    restaurant_name = Restaurant.new(name: 'Have a good Time')
+     -    expect("#{restaurant_name}").to eq('Have a good Time')
+     - end
+
+     2. Run rspec
+     $ rspec
+     # output: 100% coverage and finished example
+
+    - spec/models/comment_spec.rb
+     1. Create this file with requirement of rails helper
+     - require 'rails_helper'
+
+     2. Describe Comment model
+     - describe Comment do
+     - end
+
+     3. Add case for ancestry checking
+     - it 'has parent/child relationship' do
+     -   restaurant = Restaurant.create(name: 'My Restaurant')
+     -   parent_comment = Comment.create!(body: 'parent', restaurant: restaurant)
+     -   child_comment = Comment.create!(body: 'child', parent: parent_comment, restaurant: restaurant)
+     -   expect(parent_comment.children.first).to eq(child_comment)
+     - end
+
+     4. Run rspec
+     $ rspec
+     # output finished example witout failures
+
+     5. change structure of restaurant variable and add its above case
+     - let(:restaurant) { Restaurant.create(name: 'My Restaurant') }
+     -
+     - it 'has parent/child relationship' do
+     -   parent_comment = Comment.create!(body: 'parent', restaurant: restaurant)
+     -   ...
+     - end
+
+     6. Run rspec to check that everything still works as before
+     $ rspec
+     # output: no failures, as before
+
+     7. Check not covered place in comment.rb
+     $ COVERAGE=1 rspec
+     # browser: find comment.rb model and check place with red lines
+
+     8. Add variables for parent comment and child comment, child comment should has (!) after 'let' word
+     - let(:parent_comment) { Comment.create!(body: 'parent', restaurant: restaurant) }
+     - let!(:child_comment) { Comment.create!(body: 'child', parent: parent_comment, restaurant: restaurant) }
+
+     9. Clean up records creating from cases and instead just use declared variables
+     - it 'has parent/child relationship' do
+     -    expect(parent_comment.children.first).to eq(child_comment)
+     - end
+
+     10. Add case for upvotes checking
+     - it 'upvotes' do
+     -    Comment.upvote(child_comment.id)
+     -    expect(child_comment.reload.rank).to eq(1)
+     -  end
+
+     11. Check that test works fine
+     $ rspec
+     # output: 100% coverage  and finished example
+
+     12. Add case for checking of rank's default value
+     - it 'has a default value of 0 for tank when created' do
+     -   expect(parent_comment.rank).to eq(0)
+     - end
+
+     13. Check test in console
+     $ rspec
+     # output: failed test
+
+    - app/models/comment.rb
+     1. Add defaults function to make rank equal to 0
+     - def defaults
+     -   self.rank ||= 0
+     - end
+
+     2. Add before action for defaults function
+     - before_save :defaults
+
+     3. Check this test in console
+     $ rspec
+     # output: passed test
+-------------------------------------------------------------------------------------------------------------------
+                    Code Coverage with Simplecov
 -------------------------------------------------------------------------------------------------------------------
     - Gemfile
      #. Ensure that you have simplecov gem in your Gemfile
@@ -48,6 +153,8 @@
      $ COVERAGE=1 rspec
      # output: coverage procent of every model and controller
 
+-------------------------------------------------------------------------------------------------------------------
+                    Setting Up Rspec
 -------------------------------------------------------------------------------------------------------------------
     - Gemfile
      1. Add the gems to development test group
