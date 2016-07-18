@@ -1,6 +1,69 @@
 -------------------------------------------------------------------------------------------------------------------
                                                INSTRUCTION
 -------------------------------------------------------------------------------------------------------------------
+                    Writing Browser Based Specs
+-------------------------------------------------------------------------------------------------------------------
+    - spec/rails_helper.rb
+     1. Add requirements of Capybara's poltergeist
+     - require 'capybara/poltergeist'
+
+     2. Add Capybara's configurations
+     - # Capybara Configurations
+     - Capybara.asset_host = 'http://localhost:4000'
+     -
+     - Capybara.register_driver :poltergeist do |app|
+     -   Capybara::Poltergeist::Driver.new(
+     -      app,
+     -      debyg: false,
+     -      inspector: true,
+     -      js_errors: true,
+     -      widnow_size: [1024, 768]
+     -   )
+     - end
+     -
+     - Capybara.javascript_driver = :poltergeist
+
+     3. Add Capybara to RSpec
+     - RSpec.configure do |config|
+     -   ...
+     -   config.include Capybara::DSL
+     -   ...
+     - end
+
+     4. Change transactionals fixtures to false
+     - RSpec.configure do |config|
+     -   ...
+     -   config.use_transactional_fixtures = false
+     -   ...
+     - end
+
+     5. Chek that everything still works correctly for testing
+     $ rspec
+     # output: count of examples and failures, as before
+
+
+    - spec/features/restaurants_spec.rb
+     1. Create this file with requirement of rails helper
+     - require 'rails_helper'
+
+     2. Describe restaurants
+     - describe 'restaurants', js: true do
+     - end
+
+     3. Add case for checking of adding restaurants title to list on root page
+     - let(:restaurant_name) { 'Hamburger Joint' }
+     -  let!(:restaurant) { Restaurant.create(name: restaurant_name) }
+     -
+     -  it 'list restaurants' do
+     -    visit('/')
+     -    expect(page).to have_content(restaurant_name)
+     -  end
+
+     4. Run rspec and ensure that test passed
+     $ rspec
+     # output: finished example
+
+-------------------------------------------------------------------------------------------------------------------
                     Writing Model Spec
 -------------------------------------------------------------------------------------------------------------------
     - spec/rails_helper.rb
