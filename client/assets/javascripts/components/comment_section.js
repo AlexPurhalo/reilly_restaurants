@@ -1,42 +1,24 @@
 import React from 'react';
+import thunk from 'redux-thunk';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { Provider }  from 'react-redux';
+import * as reducers from  '../reducers';
+import CommentContainer from './comment_container';
 
-import Actions from '../actions';
-import CommentStore from '../stores/comment_store';
-
-import CommentList from './comment_list';
-import CommentForm from './comment_form'
+const reducer = combineReducers(reducers);
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
 class CommentSection extends React.Component {
     constructor(props) {
         super();
-
-        this.store = new CommentStore;
-        this.actions = new Actions(props.restaurantId);
-        this.actions.setComments(props.comments);
-        // console.log(props)
+        this.restaurantId = props.restaurantId;
+        this.comments = props.comments;
     }
-
-    static get childContextTypes() {
-        return {
-            store: React.PropTypes.object.isRequired,
-            actions: React.PropTypes.object.isRequired
-        }
-    }
-
-    getChildContext() {
-        return {
-            store: this.store,
-            actions: this.actions
-        }
-    }
-
     render() {
-        return (
-            <div>
-            <CommentForm isReplying={true}/>
-            <CommentList parent_id={null} />
-            </div>
-    );
+        const store = createStoreWithMiddleware(reducer, { comments: this.comments } );
+        return <Provider store={store}>
+            { () => <CommentContainer restaurantId={this.restaurantId} /> }
+        </Provider>
     }
 }
 
